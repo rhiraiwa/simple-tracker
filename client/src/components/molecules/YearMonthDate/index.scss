@@ -1,0 +1,28 @@
+@import '../../../common.scss';
+
+.year-month-date {
+  max-width: 100vw;
+  flex-wrap: nowrap;
+  text-align: right;
+
+  input {
+    @include common-input;
+    font-size: 1.25rem;
+  }
+
+  &__year {
+    width: 4.25rem;
+  }
+
+  &__month {
+    width: 3.0rem;
+  }
+
+  &__date {
+    width: 3.0rem;
+  }
+
+  &__span {
+    margin: auto 0.5rem;
+  }
+}

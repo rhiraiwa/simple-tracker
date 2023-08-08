@@ -1,0 +1,50 @@
+@import '../../../common.scss';
+
+.form {
+  @include common-page;
+
+  &__input {
+    margin-top: 1.0rem;
+  }
+
+  &__input-main {
+    @include common-input;
+    
+    width: 12.0rem;
+    height: 5.0rem;
+    font-size: 3.5rem;
+    text-align: center;
+  }
+
+  &__input-sub {
+
+    &--long {
+      @include common-input;
+      width: 4.25rem;
+      font-size: 1.25rem;
+      text-align: center;
+    }
+
+    &--short {
+      @include common-input;
+      width: 3.0rem;
+      font-size: 1.25rem;
+      text-align: center;
+    }
+  }
+
+  &__span {
+    margin: auto 0.5rem;
+  }
+
+  &__unit {
+    font-size: 2.0rem;
+    margin: auto 0.5rem;
+  }
+
+  &__button {
+    @include common-button;
+    width: 6.0rem;
+    margin-top: 1.0rem;
+  }
+}
