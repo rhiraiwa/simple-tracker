@@ -1,0 +1,10 @@
+DROP TABLE SIMPLE_TRACKER.AVERAGE;
+
+CREATE TABLE SIMPLE_TRACKER.AVERAGE (
+  year          VARCHAR(4)    NOT NULL,
+  month         VARCHAR(2)    NOT NULL,
+  date          VARCHAR(2)    NOT NULL,
+  average       DOUBLE(5,2)   NOT NULL
+);
+
+ALTER TABLE SIMPLE_TRACKER.AVERAGE ADD PRIMARY KEY (year, month, date);

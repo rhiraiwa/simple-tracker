@@ -1,0 +1,4 @@
+CREATE DATABASE SIMPLE_TRACKER;
+
+CREATE USER 'trainer'@'localhost' IDENTIFIED BY 'trainer00';
+GRANT ALL PRIVILEGES ON SIMPLE_TRACKER.* TO 'trainer'@'localhost';
