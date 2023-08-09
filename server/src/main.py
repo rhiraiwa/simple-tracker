@@ -16,6 +16,6 @@ def login():
 @app.route('/input', methods=['POST'])
 def input():
   rd = json.loads(request.data)
-  weight.insert(rd['year'], rd['month'], rd['date'], rd['weight'])
+  weight.insert(rd['year'], rd['month'], rd['date'], rd['time'], rd['weight'])
 
   return { 'result' : 'weight' }

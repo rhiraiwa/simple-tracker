@@ -1,10 +1,9 @@
 DROP TABLE SIMPLE_TRACKER.WEIGHT;
 
 CREATE TABLE SIMPLE_TRACKER.WEIGHT (
-  year          VARCHAR(4)    NOT NULL,
-  month         VARCHAR(2)    NOT NULL,
-  date          VARCHAR(2)    NOT NULL,
+  date          DATE          NOT NULL,
+  time          tinyint       NOT NULL,
   weight        DOUBLE(5,2)   NOT NULL
 );
 
-ALTER TABLE SIMPLE_TRACKER.WEIGHT ADD PRIMARY KEY (year, month, date);
+ALTER TABLE SIMPLE_TRACKER.WEIGHT ADD PRIMARY KEY (date);

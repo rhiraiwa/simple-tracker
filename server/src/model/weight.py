@@ -17,15 +17,24 @@ def execute_query(query):
       cursor.close()              # カーソルを終了
       conn.close()                # DB切断
 
-def insert(year, month, date, weight):
-  query = f'''
+def insert(year, month, date, time, weight):
+
+  query4weight = f'''
     insert into weight
     values (
-    {year},
-    {month},
-    {date},
+    '{int(year):04d}-{int(month):02d}-{int(date):02d}',
+    {time},
     {weight}
     );
   '''
 
-  execute_query(query)
+  query4average = f'''
+    insert into weight
+    values (
+    '{int(year):04d}-{int(month):02d}-{int(date):02d}',
+    {weight}
+    select sum(weight)/count(*) average from weight where date between '2023-08-01' and '2023-08-08';
+    );
+  '''
+
+  execute_query(query4weight)

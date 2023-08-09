@@ -10,6 +10,14 @@ const WeightInput = () => {
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
   const [date, setDate] = useState('');
+
+  const [activeTab, setActiveTab] = useState(0);
+  const tabItems = [
+    { title: '朝', content: <div></div> },
+    { title: '昼', content: <div></div> },
+    { title: '夜', content: <div></div> }
+  ];
+
   const [weight, setWeight] = useState('');
 
   const handleYear = (e) => {
@@ -34,6 +42,10 @@ const WeightInput = () => {
     setDate(value);
   }
 
+  const handleTabClick = (index) => {
+    setActiveTab(index);
+  };
+
   const handleWeight = (e) => {
     const value = e.target.value;
 
@@ -54,6 +66,7 @@ const WeightInput = () => {
         year: year,
         month: month,
         date: date,
+        time: activeTab,
         weight: weight
       })
     });
@@ -65,7 +78,7 @@ const WeightInput = () => {
 
   return (
     <div className='form'>
-      <FlexDiv className='form__input'>
+      <div className='form__input'>
         <input className='form__input-sub--long'
                type='number'
                value={ year }
@@ -84,16 +97,29 @@ const WeightInput = () => {
                onChange={ handleDate }
                />
         <span className='form__span'>日</span>
-      </FlexDiv>
-      <FlexDiv className='form__input'>
+      </div>
+      <div className='form__input'>
+        <div className='form__radio'>
+          {tabItems.map((item, index) => (
+            <div
+              key={index}
+              className={`form__radio-button ${index === activeTab ? 'active' : ''}`}
+              onClick={() => handleTabClick(index)}
+            >
+              {item.title}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className='form__input'>
         <input className='form__input-main'
               type='number'
               value={ weight }
               onChange={ handleWeight }
               />
         <span className='form__unit'>kg</span>
-      </FlexDiv>
-      <button className='form__button' onClick={ submitWeight }>登録</button>
+      </div>
+      <button className='form__button' onClick={ submitWeight }>登　録</button>
     </div>
   );
 }
