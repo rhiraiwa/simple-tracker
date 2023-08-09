@@ -20,9 +20,9 @@ const WeightInput = () => {
     const dd = ('0'+(today.getDate())).slice(-2);
     const time = today.getHours()
 
-    if (time < 11) setSelectedRadio(0);
-    else if (time < 18) setSelectedRadio(1);
-    else if (time < 25) setSelectedRadio(2);
+    if (4 < time && time < 11) setSelectedRadio(0);
+    else if (4 < time && time < 16) setSelectedRadio(1);
+    else setSelectedRadio(2);
 
     setYear(yyyy);
     setMonth(mm);
