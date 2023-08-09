@@ -50,3 +50,45 @@ def insert(year, month, date, time, weight):
 
   execute_query(query4weight)
   execute_query(query4average)
+
+def inquiry():
+  query4weight = f'''
+    select DATE_FORMAT(date, '%Y-%m-%d') date, weight from weight;
+  '''
+
+  query4average = f'''
+    select DATE_FORMAT(date, '%Y-%m-%d') date, average from average;
+  '''
+
+  weight_results = []
+  average_results = []
+
+  try:
+    conn = db.get_conn()            # DBに接続
+    cursor = conn.cursor()          # カーソルを取得
+    cursor.execute(query4weight)    # SQL実行
+    weights = cursor.fetchall()     # selectの結果を全件タプルに格納
+    cursor.execute(query4average)   # SQL実行
+    averages = cursor.fetchall()    # selectの結果を全件タプルに格納
+
+    ### ２つのリストを辞書へ変換
+    for data_tuple in weights:
+      label_tuple = ('date', 'weight')
+      row_dict = {label: data for data, label in zip(data_tuple, label_tuple)} 
+      weight_results.append(row_dict)
+
+    ### ２つのリストを辞書へ変換
+    for data_tuple in averages:
+      label_tuple = ('date', 'weight')
+      row_dict = {label: data for data, label in zip(data_tuple, label_tuple)} 
+      average_results.append(row_dict)
+
+  except mysql.connector.errors.ProgrammingError as e:
+    print('エラーが発生しました')
+    print(e)
+  finally:
+    if conn != None:
+      cursor.close()              # カーソルを終了
+      conn.close()                # DB切断
+
+  return {'weight': weight_results, 'average': average_results}

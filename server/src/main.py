@@ -19,3 +19,10 @@ def input():
   weight.insert(rd['year'], rd['month'], rd['date'], rd['time'], rd['weight'])
 
   return { 'result' : 'weight' }
+
+@app.route('/inquiry', methods=['POST'])
+def inquiry():
+  
+  result = weight.inquiry()
+
+  return { 'result' : result }
