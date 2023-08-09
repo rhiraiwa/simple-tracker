@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import Header from "../../organisms/Header";
 import './index.scss';
 
 const WeightInput = () => {
@@ -83,50 +84,53 @@ const WeightInput = () => {
   }
 
   return (
-    <div className='form'>
-      <div className='form__input'>
-        <input className='form__input-sub--long'
-               type='number'
-               value={ year }
-               onChange={ handleYear }
-               />
-        <span className='form__span'>年</span>
-        <input className='form__input-sub--short'
-               type='number'
-               value={ month }
-               onChange={ handleMonth }
-               />
-        <span className='form__span'>月</span>
-        <input className='form__input-sub--short'
-               type='number'
-               value={ date }
-               onChange={ handleDate }
-               />
-        <span className='form__span'>日</span>
-      </div>
-      <div className='form__input'>
-        <div className='form__radio'>
-          {radioButtons.map((item, index) => (
-            <div
-              key={index}
-              className={`form__radio-button ${index === selectedRadio ? 'active' : ''}`}
-              onClick={() => handleRadioClick(index)}
-            >
-              {item}
-            </div>
-          ))}
+    <React.Fragment>
+      <Header/>
+      <div className='form'>
+        <div className='form__input'>
+          <input className='form__input-sub--long'
+                type='number'
+                value={ year }
+                onChange={ handleYear }
+                />
+          <span className='form__span'>年</span>
+          <input className='form__input-sub--short'
+                type='number'
+                value={ month }
+                onChange={ handleMonth }
+                />
+          <span className='form__span'>月</span>
+          <input className='form__input-sub--short'
+                type='number'
+                value={ date }
+                onChange={ handleDate }
+                />
+          <span className='form__span'>日</span>
         </div>
+        <div className='form__input'>
+          <div className='form__radio'>
+            {radioButtons.map((item, index) => (
+              <div
+                key={index}
+                className={`form__radio-button ${index === selectedRadio ? 'active' : ''}`}
+                onClick={() => handleRadioClick(index)}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className='form__input'>
+          <input className='form__input-main'
+                type='number'
+                value={ weight }
+                onChange={ handleWeight }
+                />
+          <span className='form__unit'>kg</span>
+        </div>
+        <button className='form__button' onClick={ submitWeight }>登　録</button>
       </div>
-      <div className='form__input'>
-        <input className='form__input-main'
-              type='number'
-              value={ weight }
-              onChange={ handleWeight }
-              />
-        <span className='form__unit'>kg</span>
-      </div>
-      <button className='form__button' onClick={ submitWeight }>登　録</button>
-    </div>
+    </React.Fragment>
   );
 }
 

@@ -1,0 +1,37 @@
+@import '../../../common.scss';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  height: 4.0rem;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  background-color: $primary-blue;
+
+  &__title {
+    color: $background-color;
+    font-size: 1.2rem;
+    margin: auto;
+  }
+
+  &__button {
+    margin: auto 1.0rem;
+  }
+
+  &__icon {
+    height: 1.2rem;
+    width: 1.2rem;
+  }
+
+  &__link {
+    text-decoration: none;
+    color: $background-color;
+    font-size: 1.2rem;
+
+    span {
+      margin-left: 0.25rem;
+    }
+  }
+}
