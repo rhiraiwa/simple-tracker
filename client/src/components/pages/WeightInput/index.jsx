@@ -1,24 +1,32 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import FlexDiv from "../../atoms/FlexDiv";
+import { useEffect, useState } from "react";
 import './index.scss';
 
 const WeightInput = () => {
-
-  const navigate = useNavigate();
 
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
   const [date, setDate] = useState('');
 
-  const [activeTab, setActiveTab] = useState(0);
-  const tabItems = [
-    { title: '朝', content: <div></div> },
-    { title: '昼', content: <div></div> },
-    { title: '夜', content: <div></div> }
-  ];
+  const [selectedRadio, setSelectedRadio] = useState(0);
+  const radioButtons = ['朝', '昼', '夜'];
 
   const [weight, setWeight] = useState('');
+
+  useEffect(() => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = ('0'+(today.getMonth()+1)).slice(-2);
+    const dd = ('0'+(today.getDate())).slice(-2);
+    const time = today.getHours()
+
+    if (time < 11) setSelectedRadio(0);
+    else if (time < 18) setSelectedRadio(1);
+    else if (time < 25) setSelectedRadio(2);
+
+    setYear(yyyy);
+    setMonth(mm);
+    setDate(dd);
+  }, []);
 
   const handleYear = (e) => {
     const value = e.target.value.replace('.', '');
@@ -42,8 +50,8 @@ const WeightInput = () => {
     setDate(value);
   }
 
-  const handleTabClick = (index) => {
-    setActiveTab(index);
+  const handleRadioClick = (index) => {
+    setSelectedRadio(index);
   };
 
   const handleWeight = (e) => {
@@ -55,7 +63,7 @@ const WeightInput = () => {
   }
 
   const submitWeight = async () => {
-    const response = await fetch('http://localhost:5000/input', {
+    await fetch('http://localhost:5000/input', {
       credentials:'include',
       mode: "cors",
       method: "POST",
@@ -66,14 +74,12 @@ const WeightInput = () => {
         year: year,
         month: month,
         date: date,
-        time: activeTab,
+        time: selectedRadio,
         weight: weight
       })
     });
 
-    const json = await response.json();
-
-    navigate('/WeightInquiry');
+    alert('登録しました');
   }
 
   return (
@@ -100,13 +106,13 @@ const WeightInput = () => {
       </div>
       <div className='form__input'>
         <div className='form__radio'>
-          {tabItems.map((item, index) => (
+          {radioButtons.map((item, index) => (
             <div
               key={index}
-              className={`form__radio-button ${index === activeTab ? 'active' : ''}`}
-              onClick={() => handleTabClick(index)}
+              className={`form__radio-button ${index === selectedRadio ? 'active' : ''}`}
+              onClick={() => handleRadioClick(index)}
             >
-              {item.title}
+              {item}
             </div>
           ))}
         </div>
