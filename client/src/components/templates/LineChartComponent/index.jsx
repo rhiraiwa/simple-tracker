@@ -2,6 +2,17 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import './index.scss';
 
 const LineChartComponent = ({ data, dataKey1, dataKey2 }) => {
+
+  // const getAutoYDomain = (data, marginRatio = 0.1)  => {
+  //   const values = data.map(entry => entry.uv);
+  //   const minValue = Math.min(...values);
+  //   const maxValue = Math.max(...values);
+  //   const margin = (maxValue - minValue) * marginRatio;
+  //   return [minValue - margin, maxValue + margin];
+  // }
+
+  // const yDomain = getAutoYDomain(data);
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart data={data}
@@ -13,7 +24,8 @@ const LineChartComponent = ({ data, dataKey1, dataKey2 }) => {
       // }}
       >
         <XAxis dataKey="date" />
-        <YAxis className="y-axis" mirror={true}/>
+        {/* <YAxis className="y-axis" mirror={true}/> */}
+        <YAxis className="y-axis" mirror={true} domain='auto' />
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
         <Legend verticalAlign="bottom" />

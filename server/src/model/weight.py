@@ -17,7 +17,7 @@ def execute_query(query):
       cursor.close()              # カーソルを終了
       conn.close()                # DB切断
 
-def insert(year, month, date, time, weight):
+def insert(year, month, date, time, weight, body_fat_percentage):
   date_str = f'{year}-{month}-{date}'
   input_date = datetime.strptime(date_str, '%Y-%m-%d')
 
@@ -26,7 +26,8 @@ def insert(year, month, date, time, weight):
     values (
     '{input_date}',
     {time},
-    {weight}
+    {weight},
+    {body_fat_percentage}
     );
   '''
 
@@ -37,7 +38,9 @@ def inquiry():
     SELECT
       DATE_FORMAT(w.date, '%Y-%m-%d') date,
       w.weight,
-      AVG(w2.weight) AS two_week_avg
+      AVG(w2.weight) AS weight_avg,
+      w.bodyFatPercentage,
+      AVG(w2.bodyFatPercentage) AS BFP_avg
     FROM
       WEIGHT w
     LEFT JOIN
@@ -58,7 +61,7 @@ def inquiry():
 
     ### ２つのリストを辞書へ変換
     for data_tuple in weights:
-      label_tuple = ('date', 'weight', 'average')
+      label_tuple = ('date', 'weight', 'weight_average', 'bodyFatPercentage', 'BFP_average')
       row_dict = {label: data for data, label in zip(data_tuple, label_tuple)} 
       results.append(row_dict)
 
@@ -103,13 +106,14 @@ def check(year, month, date):
 
   return { 'result' : isExist }
 
-def update(year, month, date, time, weight):
+def update(year, month, date, time, weight, body_fat_percentage):
   query = f'''
     UPDATE
       WEIGHT
     SET
       TIME = {time},
-      WEIGHT = {weight}
+      WEIGHT = {weight},
+      BODYFATPERCENTAGE = {body_fat_percentage}
     WHERE
       date = '{year}-{month}-{date}';
   '''

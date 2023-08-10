@@ -13,6 +13,7 @@ const WeightInput = () => {
   const radioButtons = ['朝', '昼', '夜'];
 
   const [weight, setWeight] = useState('');
+  const [bodyFatPercentage, setBodyFatPercentage] = useState('');
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -66,6 +67,14 @@ const WeightInput = () => {
     setWeight(value);
   }
 
+  const handleBodyFatPercentage = (e) => {
+    const value = e.target.value;
+
+    // より詳細な入力チェックを入るつもり（.xとか）
+    if (value.replace('.', '').length > 3) return;
+    setBodyFatPercentage(value);
+  }
+
   const checkExist = async () => {
     try {
       const response = await fetch('http://localhost:5000/check', {
@@ -113,7 +122,8 @@ const WeightInput = () => {
           month: month,
           date: date,
           time: selectedRadio,
-          weight: weight
+          weight: weight,
+          bodyFatPercentage: bodyFatPercentage
         })
       });
 
@@ -168,6 +178,14 @@ const WeightInput = () => {
                 onChange={ handleWeight }
                 />
           <span className='form__unit'>kg</span>
+        </div>
+        <div className='form__input'>
+          <input className='form__input-main'
+                type='number'
+                value={ bodyFatPercentage }
+                onChange={ handleBodyFatPercentage }
+                />
+          <span className='form__unit'>%</span>
         </div>
         <button className='form__button' onClick={ checkExist }>登　録</button>
       </div>

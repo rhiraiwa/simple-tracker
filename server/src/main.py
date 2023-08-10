@@ -23,14 +23,14 @@ def check():
 @app.route('/input', methods=['POST'])
 def input():
   rd = json.loads(request.data)
-  weight.insert(rd['year'], rd['month'], rd['date'], rd['time'], rd['weight'])
+  weight.insert(rd['year'], rd['month'], rd['date'], rd['time'], rd['weight'], rd['bodyFatPercentage'])
 
   return { 'insert' : 'done' }
 
 @app.route('/update', methods=['POST'])
 def update():
   rd = json.loads(request.data)
-  weight.update(rd['year'], rd['month'], rd['date'], rd['time'], rd['weight'])
+  weight.update(rd['year'], rd['month'], rd['date'], rd['time'], rd['weight'], rd['bodyFatPercentage'])
 
   return { 'update' : 'done' }
 
