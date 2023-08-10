@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../organisms/Header";
 import './index.scss';
+import MessageBox from "../../organisms/MessageBox";
 
 const WeightInput = () => {
 
@@ -12,6 +13,8 @@ const WeightInput = () => {
   const radioButtons = ['朝', '昼', '夜'];
 
   const [weight, setWeight] = useState('');
+
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const today = new Date();
@@ -118,7 +121,7 @@ const WeightInput = () => {
       console.error('Fetch error:', error);
     }
 
-    alert('登録しました');
+    setIsOpen(true);
   }
 
   return (
@@ -168,6 +171,11 @@ const WeightInput = () => {
         </div>
         <button className='form__button' onClick={ checkExist }>登　録</button>
       </div>
+      {
+        isOpen && (
+          <MessageBox message={'登録しました'} closeMethod={ ()=>setIsOpen(false) }/>
+        )
+      }
     </React.Fragment>
   );
 }

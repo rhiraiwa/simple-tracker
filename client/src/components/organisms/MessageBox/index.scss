@@ -1,0 +1,45 @@
+@import '../../../common.scss';
+
+.background-layer {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: #666;
+  z-index: 20;
+  opacity: 0.5;
+}
+
+.forward-layer {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 30;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .message-box {
+    width: 50vw;
+    height: 30vh;
+    background-color: #FFF;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid #ccc;
+    border-radius: 4px;
+
+    &__text {
+      margin: 1.0rem;
+    }
+
+    &__button {
+      @include common-button;
+      margin: 1.0rem;
+    }
+  }
+}

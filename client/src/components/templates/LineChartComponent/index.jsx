@@ -16,9 +16,9 @@ const LineChartComponent = ({ data, dataKey }) => {
         <YAxis className="y-axis" mirror={true}/>
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
-        {/* <Legend /> */}
+        <Legend />
         <Line type="monotone" dataKey={dataKey} stroke="#a4c4e1" isAnimationActive={false} />
-        {/* <Line type="monotone" dataKey="result" stroke="#d88488" isAnimationActive={false} /> */}
+        <Line type="monotone" dataKey="weight" stroke="#f1d6df" isAnimationActive={false} />
       </LineChart>
     </ResponsiveContainer>
   );
