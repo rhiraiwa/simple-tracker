@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../organisms/Header';
 import LineChartComponent from '../../templates/LineChartComponent';
+// import filter from '../../../img/filter_primary-blue.png';
 import './index.scss';
 
 const WeightInquiry = () => {
@@ -8,8 +9,8 @@ const WeightInquiry = () => {
   
   const [activeTab, setActiveTab] = useState(0);
   const tabItems = [
-    { title: '２週間平均値', content: <LineChartComponent data={ weight } dataKey='average'/> },
-    { title: '測定値', content: <LineChartComponent data={ weight } dataKey='weight'/> }
+    { title: '体重', content: <LineChartComponent data={ weight } dataKey1='weight' dataKey2='average'/> },
+    { title: '体脂肪率', content: <LineChartComponent data={ weight } dataKey1='weight' dataKey2='average'/> }
   ];
 
   const handleTabClick = (index) => {
@@ -53,6 +54,17 @@ const WeightInquiry = () => {
         </div>
         <div className="tab__content">
           {tabItems[activeTab].content}
+        </div>
+        <div className='tab__filter'>
+          {/* <img className='tab__filter-icon' src={ filter } alt='filter'/> */}
+          {/* <div>
+            <input type='checkbox' />
+            <label>２週間平均値</label>
+          </div>
+          <div>
+            <input type='checkbox' />
+            <label>測定値</label>
+          </div> */}
         </div>
       </div>
     </React.Fragment>
