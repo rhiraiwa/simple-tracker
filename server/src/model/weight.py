@@ -1,6 +1,6 @@
 import mysql.connector
 import src.model.utils.db_access as db
-from datetime import datetime, timedelta
+from datetime import datetime
 
 def execute_query(query):
   try:
@@ -18,12 +18,10 @@ def execute_query(query):
       conn.close()                # DB切断
 
 def insert(year, month, date, time, weight):
-
   date_str = f'{year}-{month}-{date}'
-
   input_date = datetime.strptime(date_str, '%Y-%m-%d')
 
-  query4weight = f'''
+  query = f'''
     insert into weight
     values (
     '{input_date}',
@@ -32,10 +30,9 @@ def insert(year, month, date, time, weight):
     );
   '''
 
-  execute_query(query4weight)
+  execute_query(query)
 
 def inquiry():
-
   query = f'''
     SELECT
       DATE_FORMAT(w.date, '%Y-%m-%d') date,
@@ -74,3 +71,47 @@ def inquiry():
       conn.close()                # DB切断
 
   return results
+
+def check(year, month, date):
+  query = f'''
+    SELECT
+      count(*)
+    FROM
+      WEIGHT
+    WHERE
+      date = '{year}-{month}-{date}';
+  '''
+
+  isExist = False
+
+  try:
+    conn = db.get_conn()            # DBに接続
+    cursor = conn.cursor()          # カーソルを取得
+    cursor.execute(query)           # SQL実行
+    data_count = cursor.fetchall()     # selectの結果を全件タプルに格納
+
+    if data_count[0][0] > 0:
+      isExist = True
+
+  except mysql.connector.errors.ProgrammingError as e:
+    print('エラーが発生しました')
+    print(e)
+  finally:
+    if conn != None:
+      cursor.close()              # カーソルを終了
+      conn.close()                # DB切断
+
+  return { 'result' : isExist }
+
+def update(year, month, date, time, weight):
+  query = f'''
+    UPDATE
+      WEIGHT
+    SET
+      TIME = {time},
+      WEIGHT = {weight}
+    WHERE
+      date = '{year}-{month}-{date}';
+  '''
+
+  execute_query(query)

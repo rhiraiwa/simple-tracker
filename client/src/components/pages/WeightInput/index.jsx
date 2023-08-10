@@ -63,22 +63,60 @@ const WeightInput = () => {
     setWeight(value);
   }
 
-  const submitWeight = async () => {
-    await fetch('http://localhost:5000/input', {
-      credentials:'include',
-      mode: "cors",
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json; charset=utf-8",
-      },
-      body: JSON.stringify({
-        year: year,
-        month: month,
-        date: date,
-        time: selectedRadio,
-        weight: weight
-      })
-    });
+  const checkExist = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/check', {
+        credentials: 'include',
+        mode: 'cors',
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify({
+          year: year,
+          month: month,
+          date: date
+        })
+      });
+
+      const json = await response.json();
+      
+      if (json.result) {
+        const conf = window.confirm(`${year}年${month}月${date}日のデータは既に登録されています。更新しますか？`);
+        
+        if (conf) submitWeight('update');;
+
+        return;
+      }
+
+      submitWeight('input');
+
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
+  }
+
+  const submitWeight = async (mode) => {
+    try {
+      await fetch(`http://localhost:5000/${mode}`, {
+        credentials:'include',
+        mode: "cors",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify({
+          year: year,
+          month: month,
+          date: date,
+          time: selectedRadio,
+          weight: weight
+        })
+      });
+
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
 
     alert('登録しました');
   }
@@ -128,7 +166,7 @@ const WeightInput = () => {
                 />
           <span className='form__unit'>kg</span>
         </div>
-        <button className='form__button' onClick={ submitWeight }>登　録</button>
+        <button className='form__button' onClick={ checkExist }>登　録</button>
       </div>
     </React.Fragment>
   );
