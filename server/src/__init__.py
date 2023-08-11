@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 @app.after_request
 def after_request(response):
-  allowed_origins = ['http://127.0.0.1:3000', 'http://localhost:3000']
+  allowed_origins = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://133.242.133.214:3000']
   origin = request.headers.get('Origin')
   if origin in allowed_origins:
     response.headers.add('Access-Control-Allow-Origin', origin)

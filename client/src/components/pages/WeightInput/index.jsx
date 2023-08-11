@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../organisms/Header";
-import './index.scss';
 import MessageBox from "../../organisms/MessageBox";
+import { baseUri } from '../../../const'
+import './index.scss';
 
 const WeightInput = () => {
 
@@ -77,7 +78,7 @@ const WeightInput = () => {
 
   const checkExist = async () => {
     try {
-      const response = await fetch('http://localhost:5000/check', {
+      const response = await fetch(`${baseUri}/check`, {
         credentials: 'include',
         mode: 'cors',
         method: 'POST',
@@ -110,7 +111,7 @@ const WeightInput = () => {
 
   const submitWeight = async (mode) => {
     try {
-      await fetch(`http://localhost:5000/${mode}`, {
+      await fetch(`${baseUri}/${mode}`, {
         credentials:'include',
         mode: "cors",
         method: "POST",

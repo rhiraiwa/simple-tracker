@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../organisms/Header';
 import LineChartComponent from '../../templates/LineChartComponent';
 // import filter from '../../../img/filter_primary-blue.png';
+import { baseUri } from '../../../const'
 import './index.scss';
 
 const WeightInquiry = () => {
@@ -20,7 +21,7 @@ const WeightInquiry = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/inquiry', {
+        const response = await fetch(`${baseUri}/inquiry`, {
           credentials: 'include',
           mode: 'cors',
           method: 'POST'

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { baseUri } from '../../../const'
 import './index.scss';
 
 const Login = () => {
@@ -20,7 +21,7 @@ const Login = () => {
   }
 
   const executeLogin = async () => {
-    const response = await fetch('http://localhost:5000/login', {
+    const response = await fetch(`${baseUri}/login`, {
       credentials:'include',
       mode: "cors",
       method: "POST",

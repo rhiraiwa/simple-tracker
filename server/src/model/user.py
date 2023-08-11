@@ -21,7 +21,7 @@ def execute_query(query):
 
 def select():
   query = '''
-    select * from user;
+    select * from USER;
   '''
 
   result_row = []
@@ -38,7 +38,7 @@ def select():
 
 def authenticate(name, password):
   query = f'''
-    select count(*) from user
+    select count(*) from USER
     where name = '{name}'
     and password = '{password}';
   '''
