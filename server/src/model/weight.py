@@ -22,7 +22,7 @@ def insert(year, month, date, time, weight, body_fat_percentage):
   input_date = datetime.strptime(date_str, '%Y-%m-%d')
 
   query = f'''
-    insert into weight
+    insert into WEIGHT
     values (
     '{input_date}',
     {time},
