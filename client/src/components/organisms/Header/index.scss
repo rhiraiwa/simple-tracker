@@ -21,17 +21,21 @@
   }
 
   &__icon {
-    height: 1.2rem;
-    width: 1.2rem;
+    margin: 0 auto;
+    height: 1.5rem;
+    width: 1.5rem;
   }
 
   &__link {
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
     color: $background-color;
     font-size: 1.2rem;
 
     span {
-      margin-left: 0.25rem;
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
     }
   }
 }

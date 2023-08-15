@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import input from '../../../img/input_white.png';
 import graph from '../../../img/graph_white.png';
+import user from '../../../img/user_white.png';
 import logout from '../../../img/logout_white.png';
 import './index.scss';
 
@@ -20,11 +21,12 @@ const Header = () => {
           <span>グラフ</span>
         </Link>
       </div>
-      {/* <div className='header__button'>
-        <Link to='/' className='header__link'>
-          <img className='header__icon' src={ logout } alt='graph'/>
+      <div className='header__button'>
+        <Link to='/UserSetting' className='header__link'>
+          <img className='header__icon' src={ user } alt='graph'/>
+          <span>ユーザー</span>
         </Link>
-      </div> */}
+      </div>
     </div>
   );
 }
