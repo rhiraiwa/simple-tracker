@@ -41,6 +41,7 @@ const Login = () => {
       return;
     }
 
+    sessionStorage.setItem('username', username);
     navigate('/WeightInput');
   }
   

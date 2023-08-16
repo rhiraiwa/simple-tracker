@@ -1,0 +1,32 @@
+@import '../../../common.scss';
+
+.user-setting {
+  @include common-page;
+
+  .user-goal {
+
+    &__label {
+      font-size: 2.0rem;
+      margin-right: 1.0rem;
+    }
+    
+    &__input {
+      @include common-input;
+      width: 12.0rem;
+      height: 5.0rem;
+      font-size: 3.5rem;
+      text-align: center;
+    }
+
+    &__unit {
+      font-size: 2.0rem;
+      margin: auto 0.5rem;
+    }
+
+    &__icon {
+      margin-left: 0.5rem;
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+  }
+}

@@ -40,3 +40,19 @@ def inquiry():
   result = weight.inquiry()
 
   return { 'result' : result }
+
+@app.route('/getGoal', methods=['POST'])
+def get_goal():
+  
+  rd = json.loads(request.data)
+  result = user.getGoal(rd['username'])
+
+  return { 'result' : result }
+
+@app.route('/setGoal', methods=['POST'])
+def set_goal():
+  
+  rd = json.loads(request.data)
+  result = user.setGoal(rd['username'], rd['goal'])
+
+  return { 'result' : result }

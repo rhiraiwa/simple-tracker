@@ -40,13 +40,15 @@ def inquiry():
       w.weight,
       AVG(w2.weight) AS weight_avg,
       w.bodyFatPercentage,
-      AVG(w2.bodyFatPercentage) AS BFP_avg
+      AVG(w2.bodyFatPercentage) AS BFP_avg,
+      u.goal
     FROM
+      USER u,
       WEIGHT w
     LEFT JOIN
       WEIGHT w2 ON w.date >= w2.date AND w.date - INTERVAL 2 WEEK <= w2.date
     GROUP BY
-      w.date, w.weight
+      w.date, w.weight, u.goal
     ORDER BY
       w.date;
   '''
@@ -61,7 +63,7 @@ def inquiry():
 
     ### ２つのリストを辞書へ変換
     for data_tuple in weights:
-      label_tuple = ('date', 'weight', 'weight_average', 'bodyFatPercentage', 'BFP_average')
+      label_tuple = ('date', 'weight', 'weight_average', 'bodyFatPercentage', 'BFP_average', 'weight_goal')
       row_dict = {label: data for data, label in zip(data_tuple, label_tuple)} 
       results.append(row_dict)
 

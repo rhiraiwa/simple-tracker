@@ -46,3 +46,47 @@ def authenticate(name, password):
   rows = execute_query(query)
 
   return True if rows[0][0] == 1 else False
+
+def getGoal(name):
+  query = f'''
+    select goal from USER
+    where name = '{name}';
+  '''
+
+  result_row = []
+  rows = execute_query(query)
+
+  # ### ２つのリストを辞書へ変換
+  # for data_tuple in rows:
+  #   label_tuple = ('goal')
+  #   row_dict = {label: data for data, label in zip(data_tuple, label_tuple)} 
+  #   result_row.append(row_dict)
+
+  # output_json = json.dumps(result_row, ensure_ascii=False)
+  # return output_json
+
+  return rows[0][0]
+
+def setGoal(name, goal):
+  query = f'''
+    UPDATE
+      USER
+    SET
+      goal = {goal}
+    WHERE
+      name = '{name}';
+  '''
+
+  try:
+    conn = db.get_conn()            # DBに接続
+    cursor = conn.cursor()          # カーソルを取得
+    cursor.execute(query)           # SQL実行
+    conn.commit()                   # コミット
+
+  except mysql.connector.errors.ProgrammingError as e:
+    print('エラーが発生しました')
+    print(e)
+  finally:
+    if conn != None:
+      cursor.close()              # カーソルを終了
+      conn.close()                # DB切断

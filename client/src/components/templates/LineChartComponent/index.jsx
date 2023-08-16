@@ -1,7 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './index.scss';
 
-const LineChartComponent = ({ data, dataKey1, dataKey2 }) => {
+const LineChartComponent = ({ data, dataKey1, dataKey2, dataKey3 }) => {
 
   // const getAutoYDomain = (data, marginRatio = 0.1)  => {
   //   const values = data.map(entry => entry.uv);
@@ -33,6 +33,11 @@ const LineChartComponent = ({ data, dataKey1, dataKey2 }) => {
         {
           dataKey2 !== '' && (
             <Line type="monotone" dataKey={dataKey2} stroke="#f1d6df" isAnimationActive={false} />
+          )
+        }
+        {
+          dataKey3 !== '' && (
+            <Line type="monotone" dataKey={dataKey3} stroke="#a4e1a9" isAnimationActive={false} dot={false}/>
           )
         }
       </LineChart>
