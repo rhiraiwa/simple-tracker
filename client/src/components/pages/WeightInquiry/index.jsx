@@ -11,7 +11,7 @@ const WeightInquiry = () => {
   const [activeTab, setActiveTab] = useState(0);
   const tabItems = [
     { title: '体重', content: <LineChartComponent data={ weight } dataKey1='weight' dataKey2='weight_average' dataKey3='weight_goal'/> },
-    { title: '体脂肪率', content: <LineChartComponent data={ weight } dataKey1='bodyFatPercentage' dataKey2='BFP_average' dataKey3=''/> }
+    { title: '体脂肪率', content: <LineChartComponent data={ weight } dataKey1='bodyFatPercentage' dataKey2='BFP_average' dataKey3='BFP_goal'/> }
   ];
 
   const handleTabClick = (index) => {

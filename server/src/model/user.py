@@ -49,30 +49,28 @@ def authenticate(name, password):
 
 def getGoal(name):
   query = f'''
-    select goal from USER
+    select weight_goal, BFP_goal from USER
     where name = '{name}';
   '''
 
   result_row = []
   rows = execute_query(query)
 
-  # ### ２つのリストを辞書へ変換
-  # for data_tuple in rows:
-  #   label_tuple = ('goal')
-  #   row_dict = {label: data for data, label in zip(data_tuple, label_tuple)} 
-  #   result_row.append(row_dict)
+  ### ２つのリストを辞書へ変換
+  for data_tuple in rows:
+    label_tuple = ('weight_goal', 'BFP_goal')
+    row_dict = {label: data for data, label in zip(data_tuple, label_tuple)} 
+    result_row.append(row_dict)
 
-  # output_json = json.dumps(result_row, ensure_ascii=False)
-  # return output_json
+  output_json = json.dumps(result_row, ensure_ascii=False)
+  return output_json
 
-  return rows[0][0]
-
-def setGoal(name, goal):
+def setGoal(name, goal, target):
   query = f'''
     UPDATE
       USER
     SET
-      goal = {goal}
+      {target} = {goal}
     WHERE
       name = '{name}';
   '''

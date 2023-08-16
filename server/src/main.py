@@ -53,6 +53,6 @@ def get_goal():
 def set_goal():
   
   rd = json.loads(request.data)
-  result = user.setGoal(rd['username'], rd['goal'])
+  result = user.setGoal(rd['username'], rd['goal'], rd['target'])
 
   return { 'result' : result }

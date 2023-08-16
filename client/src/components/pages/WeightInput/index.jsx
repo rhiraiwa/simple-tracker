@@ -186,7 +186,7 @@ const WeightInput = () => {
                 value={ bodyFatPercentage }
                 onChange={ handleBodyFatPercentage }
                 />
-          <span className='form__unit'>%</span>
+          <span className='form__unit'> %</span>
         </div>
         <button className='form__button' onClick={ checkExist }>登　録</button>
       </div>
