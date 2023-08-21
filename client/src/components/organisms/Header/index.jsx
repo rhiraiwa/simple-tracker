@@ -3,12 +3,16 @@ import input from '../../../img/input_white.png';
 import graph from '../../../img/graph_white.png';
 import flag from '../../../img/flag_white.png';
 import logout from '../../../img/logout_white.png';
+import logo from '../../../img/logo.png';
 import './index.scss';
 
 const Header = () => {
   return(
     <div className='header'>
-      <span className='header__title'>アプリタイトル</span>
+      <div className='header__title' style={{display:'flex'}}>
+        <img className='logo-icon' src={ logo } alt='logo'/>
+        <span>W-Log</span>
+      </div>
       <div className='header__button'>
         <Link to='/UserSetting' className='header__link'>
           <img className='header__icon' src={ flag } alt='flag'/>

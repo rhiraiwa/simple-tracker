@@ -12,8 +12,20 @@
 
   &__title {
     color: $background-color;
-    font-size: 1.2rem;
-    margin: auto;
+    font-size: 1.5rem;
+    
+    .logo-icon {
+      
+      margin: 0.75rem;
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+
+    span {
+      padding-top: 1.25rem;
+      margin-right: 1.0rem;
+    }
+    
   }
 
   &__button {
