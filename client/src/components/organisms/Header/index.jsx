@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import input from '../../../img/input_white.png';
 import weight from '../../../img/weight_white.png';
 import food from '../../../img/food_white.png';
-import graph from '../../../img/graph_white.png';
+// import graph from '../../../img/graph_white.png';
 import flag from '../../../img/flag_white.png';
 import logo from '../../../img/logo.png';
+import logout from '../../../img/logout_white.png';
 import './index.scss';
 
 const Header = () => {
@@ -14,7 +14,7 @@ const Header = () => {
         <img className='logo-icon' src={ logo } alt='logo'/>
         <span>W-Log</span>
       </div>
-      <div className='header__button'>
+      {/* <div className='header__button'>
         <Link to='/UserSetting' className='header__link'>
           <img className='header__icon' src={ flag } alt='flag'/>
           <span>目標</span>
@@ -36,6 +36,12 @@ const Header = () => {
         <Link to='/WeightInquiry' className='header__link'>
           <img className='header__icon' src={ graph } alt='graph'/>
           <span>グラフ</span>
+        </Link>
+      </div> */}
+      <div className='header__button'>
+        <Link to='/' className='header__link'>
+          <img className='header__icon' src={ logout } alt='logout'/>
+          <span>ログアウト</span>
         </Link>
       </div>
     </div>

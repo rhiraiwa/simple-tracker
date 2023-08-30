@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { baseUri } from '../../../const'
 import Header from '../../organisms/Header';
 import LineChartComponent from '../../templates/LineChartComponent';
 // import filter from '../../../img/filter_primary-blue.png';
-import { baseUri } from '../../../const'
-import './index.scss';
 import PFCLineChart from '../../templates/PFCLineChart';
+import Footer from '../../organisms/Footer';
+import './index.scss';
 
 const WeightInquiry = () => {
   const [weight, setWeight] = useState([]);
@@ -70,6 +71,7 @@ const WeightInquiry = () => {
           </div> */}
         </div>
       </div>
+      <Footer/>
     </React.Fragment>
   );
 }

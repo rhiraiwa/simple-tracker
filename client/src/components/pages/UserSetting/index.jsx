@@ -3,6 +3,7 @@ import { baseUri } from '../../../const';
 import Header from '../../organisms/Header';
 import reload from '../../../img/reload_primary_blue.png';
 import MessageBox from '../../organisms/MessageBox';
+import Footer from '../../organisms/Footer';
 import './index.scss';
 
 const UserSetting = () => {
@@ -133,6 +134,7 @@ const UserSetting = () => {
           <MessageBox message={'目標値を変更しました'} closeMethod={ ()=>setIsOpen(false) }/>
         )
       }
+      <Footer/>
     </React.Fragment>
   );
 }

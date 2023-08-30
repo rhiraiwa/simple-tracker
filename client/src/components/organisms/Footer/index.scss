@@ -1,12 +1,12 @@
 @import '../../../common.scss';
 
-.header {
+.footer {
   display: flex;
   justify-content: space-between;
   height: 4.0rem;
   width: 100%;
   position: absolute;
-  top: 0;
+  top: calc(100vh - 4.0rem);
   z-index: 10;
   background-color: $primary-blue;
 
@@ -29,7 +29,7 @@
   }
 
   &__button {
-    width: 4.0rem;
+    width: 3.0rem;
     margin: auto 1.0rem;
   }
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../organisms/Header";
 import MessageBox from "../../organisms/MessageBox";
 import { baseUri } from '../../../const'
+import Footer from "../../organisms/Footer";
 import './index.scss';
 
 const WeightInput = () => {
@@ -195,6 +196,7 @@ const WeightInput = () => {
           <MessageBox message={'登録しました'} closeMethod={ ()=>setIsOpen(false) }/>
         )
       }
+      <Footer/>
     </React.Fragment>
   );
 }
