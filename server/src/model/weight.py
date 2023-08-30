@@ -42,14 +42,30 @@ def inquiry():
       w.bodyFatPercentage,
       AVG(w2.bodyFatPercentage) AS BFP_avg,
       u.weight_goal,
-      u.BFP_goal
+      u.BFP_goal,
+      C.calorie,
+      C.protein,
+      C.fat,
+      C.carbohydrate
     FROM
       USER u,
       WEIGHT w
     LEFT JOIN
       WEIGHT w2 ON w.date >= w2.date AND w.date - INTERVAL 2 WEEK <= w2.date
+    LEFT JOIN (
+        SELECT
+            DATE(date) AS date,
+            SUM(calorie) AS calorie,
+            SUM(protein) AS protein,
+            SUM(fat) AS fat,
+            SUM(carbohydrate) AS carbohydrate
+        FROM
+            SIMPLE_TRACKER.CALORIE
+        GROUP BY
+            DATE(date)
+    ) C ON w.date = C.date
     GROUP BY
-      w.date, w.weight, u.weight_goal, u.BFP_goal
+      w.date, w.weight, u.weight_goal, u.BFP_goal, C.calorie, C.protein, C.fat, C.carbohydrate
     ORDER BY
       w.date;
   '''
@@ -64,7 +80,7 @@ def inquiry():
 
     ### ２つのリストを辞書へ変換
     for data_tuple in weights:
-      label_tuple = ('date', 'weight', 'weight_average', 'bodyFatPercentage', 'BFP_average', 'weight_goal', 'BFP_goal')
+      label_tuple = ('date', 'weight', 'weight_average', 'bodyFatPercentage', 'BFP_average', 'weight_goal', 'BFP_goal', 'calorie', 'protein', 'fat', 'carbohydrate')
       row_dict = {label: data for data, label in zip(data_tuple, label_tuple)} 
       results.append(row_dict)
 

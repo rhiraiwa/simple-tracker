@@ -1,0 +1,17 @@
+@import '../../../common.scss';
+
+.pfc-input {
+  @include common-page;
+}
+
+.pfc-note {
+  @include common-input;
+  
+  width: 80vw;
+  height: 5.0rem;
+
+  /*下記はrootに対して設定済みのはずだが効いていないので*/
+  font-family: Mairyo;
+  font-size: 16px;
+  color: $text-color;
+}

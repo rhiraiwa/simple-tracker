@@ -3,6 +3,7 @@ import Login from "./components/pages/Login";
 import WeightInput from "./components/pages/WeightInput";
 import WeightInquiry from "./components/pages/WeightInquiry";
 import UserSetting from "./components/pages/UserSetting";
+import PFCInput from "./components/pages/PFCInput";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path='/WeightInput' element={ <WeightInput/> }/>
         <Route path='/WeightInquiry' element={ <WeightInquiry/> }/>
         <Route path='/UserSetting' element={ <UserSetting/> }/>
+        <Route path='/PFCInput' element={ <PFCInput/> }/>
       </Routes>
     </div>
   );

@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom'
 import input from '../../../img/input_white.png';
+import weight from '../../../img/weight_white.png';
+import food from '../../../img/food_white.png';
 import graph from '../../../img/graph_white.png';
 import flag from '../../../img/flag_white.png';
-import logout from '../../../img/logout_white.png';
 import logo from '../../../img/logo.png';
 import './index.scss';
 
@@ -20,9 +21,15 @@ const Header = () => {
         </Link>
       </div>
       <div className='header__button'>
+        <Link to='/PFCInput' className='header__link'>
+          <img className='header__icon' src={ food } alt='food'/>
+          <span>PFC</span>
+        </Link>
+      </div>
+      <div className='header__button'>
         <Link to='/WeightInput' className='header__link'>
-          <img className='header__icon' src={ input } alt='input'/>
-          <span>入力</span>
+          <img className='header__icon' src={ weight } alt='weight'/>
+          <span>体重</span>
         </Link>
       </div>
       <div className='header__button'>

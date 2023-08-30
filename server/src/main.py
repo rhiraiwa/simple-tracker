@@ -1,6 +1,6 @@
 from src import app
 from flask import json, request
-from src.model import user, weight
+from src.model import user, weight, pfc
 
 @app.route('/', methods=['GET'])
 def index():
@@ -54,5 +54,13 @@ def set_goal():
   
   rd = json.loads(request.data)
   result = user.setGoal(rd['username'], rd['goal'], rd['target'])
+
+  return { 'result' : result }
+
+@app.route('/pfcInput', methods=['POST'])
+def pfc_input():
+  
+  rd = json.loads(request.data)
+  result = pfc.insert(rd['year'], rd['month'], rd['date'], rd['hour'], rd['minute'], rd['calorie'], rd['protein'], rd['fat'], rd['carbohydrate'], rd['note'])
 
   return { 'result' : result }
