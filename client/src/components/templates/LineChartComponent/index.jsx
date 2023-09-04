@@ -11,7 +11,7 @@ const formatTimestamp = (timestamp) => {
   return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
 };
 
-const LineChartComponent = ({ data, dataKey1, dataKey2, dataKey3 }) => {
+const LineChartComponent = ({ data, dataKey1, dataKey2, dataKey3, isPrivacyMode }) => {
   // データを取得する前にDateオブジェクトに変換
   const formattedData = data.map(item => ({
     ...item,
@@ -54,18 +54,20 @@ const LineChartComponent = ({ data, dataKey1, dataKey2, dataKey3 }) => {
           type="number"
           tickFormatter={formatTimestamp} // X軸のティックを日付形式にフォーマット
         />
-        <YAxis className="y-axis" mirror={true} domain='auto'/>
+        <YAxis className={`y-axis ${isPrivacyMode? 'private': ''}`} mirror={true} domain='auto'/>
         <CartesianGrid strokeDasharray="3 3" />
         {
-          dataKey1 === 'calorie' ? (
-            <Tooltip content={CustomTooltip} active={data !== null} payload={data} />
-          ) : (
-            <Tooltip
-              labelFormatter={(value) => {
-                const date = new Date(value);
-                return date.toISOString().split('T')[0];
-              }}
-            />
+          !isPrivacyMode && (
+            dataKey1 === 'calorie' ? (
+              <Tooltip content={CustomTooltip} active={data !== null} payload={data} />
+            ) : (
+              <Tooltip
+                labelFormatter={(value) => {
+                  const date = new Date(value);
+                  return date.toISOString().split('T')[0];
+                }}
+              />
+            )
           )
         }
         <Legend verticalAlign="bottom" />

@@ -46,7 +46,7 @@
   
     &__content {
       width: 100vw;
-      height: calc(100vh - 16.5rem);
+      height: calc(100vh - 19.5rem);
       background-color: #fff;
     }
   }
@@ -90,38 +90,81 @@
     }
   }
 
-//   .toggle-button-001 {
-//     display: inline-block;
-//     position: relative;
-//     width: 100px;
-//     height: 50px;
-//     border-radius: 50px;
-//     background-color: #dddddd;
-//     cursor: pointer;
-//     transition: background-color .4s;
-// }
+// ベーススタイル
+.toggle-area {
+  height: 3.0rem;
+  display: flex;
+  // justify-content: space-around;
+  align-items: center;
 
-// .toggle-button-001:has(:checked) {
-//     background-color: #47bee6;
-// }
+  .toggle-label {
+    background-color: $secondary-blue;
+    margin-left: auto;
+    padding-left: 1.0rem;
+    height: 2rem;
+    font-size: 1.25rem;
+    color: #fff;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+  }
 
-// .toggle-button-001::after {
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     width: 50px;
-//     height: 50px;
-//     border-radius: 50%;
-//     box-shadow: 0 0 5px rgb(0 0 0 / 20%);
-//     background-color: #fff;
-//     content: '';
-//     transition: left .4s;
-// }
+  .toggle-ribon {
+    background-color: $secondary-blue;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+  }
 
-// .toggle-button-001:has(:checked)::after {
-//     left: 50px;
-// }
-
-// .toggle-button-001 input {
-//     display: none;
-// }
+  .toggle {
+    margin-left: 1.0rem;
+    margin-right: 1.0rem;
+    display: inline-block;
+    position: relative;
+    width: 2rem;
+    height: 1rem;
+    background-color: #ccc;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease-in-out;
+    
+    &__input {
+      display: none;
+    }
+    
+    &__track {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      width: 100%;
+      height: 100%;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease-in-out;
+    }
+    
+    &.checked {
+      background-color: #66bb6a; // チェックされたときの背景色
+      
+      &__track::before {
+        left: calc(100% - 1.5rem); // チェックされたときの位置
+      }
+    }
+    
+    // トグルの中央に表示するスタイル
+    &__thumb {
+      position: absolute;
+      top: 50%;
+      left: 0.0rem;
+      transform: translateY(-50%);
+      width: 1rem;
+      height: 1rem;
+      background-color: #fff;
+      border-radius: 50%;
+      transition: left 0.3s ease-in-out;
+    }
+    
+    &.checked .toggle__thumb {
+      left: calc(100% - 1.0rem); // チェックされたときの位置
+    }
+  }
+}
