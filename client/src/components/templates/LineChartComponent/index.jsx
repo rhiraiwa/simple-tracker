@@ -54,7 +54,7 @@ const LineChartComponent = ({ data, dataKey1, dataKey2, dataKey3, isPrivacyMode 
           type="number"
           tickFormatter={formatTimestamp} // X軸のティックを日付形式にフォーマット
         />
-        <YAxis className={`y-axis ${isPrivacyMode? 'private': ''}`} mirror={true} domain='auto'/>
+        <YAxis className='y-axis' mirror={true} tick={isPrivacyMode? 0 : 1} domain='auto'/>
         <CartesianGrid strokeDasharray="3 3" />
         {
           !isPrivacyMode && (
