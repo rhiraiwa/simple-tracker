@@ -21,7 +21,7 @@ const WeightInquiry = () => {
   };
 
   const [selectedRadio, setSelectedRadio] = useState(0);
-  const radioButtons = ['過去２週間', '過去１ヶ月', '全データ'];
+  const radioButtons = ['過去２週間', '過去１ヶ月', '全期間'];
 
   const handleRadioClick = (index) => {
     setSelectedRadio(index);
@@ -101,6 +101,11 @@ const WeightInquiry = () => {
         <div className="tab__content">
           {tabItems[activeTab].content}
         </div>
+        {/* <div>
+          <label class="toggle-button-001">
+            <input type="checkbox"/>
+          </label>
+        </div> */}
         <div className='tab__filter'>
           {/* <img className='tab__filter-icon' src={ filter } alt='filter'/> */}
           {/* <div>
