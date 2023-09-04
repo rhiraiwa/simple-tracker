@@ -47,7 +47,7 @@ const Login = () => {
   
   return (
     <div className='login'>
-      <h2 className='login__title'>アプリケーションタイトル</h2>
+      <h2 className='login__title'>W-Log</h2>
       <input className='login__input'
              type='text'
              value={ username }

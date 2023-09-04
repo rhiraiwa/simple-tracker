@@ -132,10 +132,10 @@ const PFCInput = () => {
           hour: hour,
           minute: minute,
           calorie: calorie,
-          protein: protein,
-          fat: fat,
-          carbohydrate: carbohydrate,
-          note: note
+          protein: protein !== null ? protein : '',
+          fat: fat !== null ? fat : '',
+          carbohydrate: carbohydrate !== null ? carbohydrate : '',
+          note: note !== null ? note : ''
         })
       });
 

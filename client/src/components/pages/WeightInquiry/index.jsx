@@ -9,22 +9,29 @@ const WeightInquiry = () => {
   const [weight, setWeight] = useState([]);
   const [displayData, setDisplayData] = useState([]);
   
+  const [isChecked, setIsChecked] = useState(false);
+
   const [activeTab, setActiveTab] = useState(0);
   const tabItems = [
-    { title: '体重', content: <LineChartComponent data={ displayData } dataKey1='weight' dataKey2='weight_average' dataKey3='weight_goal'/> },
-    { title: '体脂肪率', content: <LineChartComponent data={ displayData } dataKey1='bodyFatPercentage' dataKey2='BFP_average' dataKey3='BFP_goal'/> },
-    { title: 'PFC', content: <LineChartComponent data={ displayData } dataKey1='calorie' dataKey2='' dataKey3=''/> } 
+    { title: '体重', content: <LineChartComponent data={ displayData } dataKey1='weight' dataKey2='weight_average' dataKey3='weight_goal' isPrivacyMode={isChecked}/> },
+    { title: '体脂肪率', content: <LineChartComponent data={ displayData } dataKey1='bodyFatPercentage' dataKey2='BFP_average' dataKey3='BFP_goal' isPrivacyMode={isChecked}/> },
+    { title: 'PFC', content: <LineChartComponent data={ displayData } dataKey1='calorie' dataKey2='' dataKey3='' isPrivacyMode={isChecked}/> } 
   ];
+
 
   const handleTabClick = (index) => {
     setActiveTab(index);
   };
 
   const [selectedRadio, setSelectedRadio] = useState(0);
-  const radioButtons = ['過去２週間', '過去１ヶ月', '全データ'];
+  const radioButtons = ['過去２週間', '過去１ヶ月', '全期間'];
 
   const handleRadioClick = (index) => {
     setSelectedRadio(index);
+  };
+  
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
   };
 
   useEffect(() => {
@@ -101,16 +108,8 @@ const WeightInquiry = () => {
         <div className="tab__content">
           {tabItems[activeTab].content}
         </div>
+
         <div className='tab__filter'>
-          {/* <img className='tab__filter-icon' src={ filter } alt='filter'/> */}
-          {/* <div>
-            <input type='checkbox' />
-            <label>２週間平均値</label>
-          </div>
-          <div>
-            <input type='checkbox' />
-            <label>測定値</label>
-          </div> */}
           <div className='filter__radio'>
             {radioButtons.map((item, index) => (
               <div
@@ -123,6 +122,19 @@ const WeightInquiry = () => {
             ))}
           </div>
         </div>
+        
+        <div className='toggle-area'>
+          <span className='toggle-label'>privacy mode</span>
+          <div className='toggle-ribon'>
+            <div className={`toggle ${isChecked ? 'checked' : ''}`} onClick={handleToggle}>
+              <input className='toggle__input' type='checkbox' checked={isChecked} onChange={()=>{}}/>
+              <div className='toggle__track'>
+                <div className={`toggle__thumb ${isChecked ? 'checked' : ''}`}></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
       </div>
       <Footer/>
     </React.Fragment>
