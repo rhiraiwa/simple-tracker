@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './index.scss';
 
+// 日本時間を表すタイムゾーンオフセット（UTC+9）
+const japanTimeZoneOffset = 9 * 60 * 60 * 1000; // ミリ秒単位
+
 // ミリ秒から日付文字列に変換する関数
 const formatTimestamp = (timestamp) => {
   const date = new Date(timestamp);
@@ -12,7 +15,7 @@ const LineChartComponent = ({ data, dataKey1, dataKey2, dataKey3 }) => {
   // データを取得する前にDateオブジェクトに変換
   const formattedData = data.map(item => ({
     ...item,
-    date: new Date(item.date).getTime(), // 日付をミリ秒に変換
+    date: new Date(item.date).getTime() + japanTimeZoneOffset, // 日付をミリ秒に変換 + 日本時間を反映
     formattedDate: new Date(item.date).toISOString().split('T')[0], // 日付をフォーマット
   }));
 
@@ -34,9 +37,9 @@ const LineChartComponent = ({ data, dataKey1, dataKey2, dataKey3 }) => {
 
     // 3日前と3日後の日付を計算
     const threeDays = 3 * 24 * 60 * 60 * 1000; // 3日分のミリ秒数
-    const startDate = minDate - threeDays;
-    const endDate = maxDate + threeDays;
-
+    const startDate = minDate - threeDays + japanTimeZoneOffset;
+    const endDate = maxDate + threeDays + japanTimeZoneOffset;
+    
     // 範囲を設定
     setMinX(startDate);
     setMaxX(endDate);
