@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { baseUri } from '../../../const';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, Label } from 'recharts';
 import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
@@ -6,20 +7,47 @@ import './index.scss';
 
 const TodaysInfo = () => {
 
+  const [todaysCalorie, setTodaysCalorie] = useState('');
+  const [todaysProtein, setTodaysProtein] = useState('');
+  const [todaysFat, setTodaysFat] = useState('');
+  const [todaysCarbohydrate, setTodaysCarbohydrate] = useState('');
   const [foodList, setFoodList] = useState([]);
 
   useEffect(() => {
-    setFoodList(
-      [
-        {calorie: 500, protein: 20, fat: 16.3, carbohydrate: 26, note: 'おにぎりおにぎりおにぎりおに'},
-        // {calorie: 500, protein: 20, fat: 6.3, carbohydrate: 26, note: 'おにぎり'},
-        // {calorie: 500, protein: 20, fat: 6.3, carbohydrate: 26, note: 'おにぎり'},
-        // {calorie: 500, protein: 20, fat: 6.3, carbohydrate: 26, note: 'おにぎり'},
-        // {calorie: 500, protein: 20, fat: 6.3, carbohydrate: 26, note: 'おにぎり'},
-        // {calorie: 500, protein: 20, fat: 6.3, carbohydrate: 26, note: 'おにぎり'},
-        {calorie: 500, protein: 20, fat: 6.3, carbohydrate: 26, note: 'おにぎり'},
-      ]
-    )
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${baseUri}/todaysInfo`, {
+          credentials: 'include',
+          mode: 'cors',
+          method: 'POST'
+        });
+        
+        const json = await response.json();
+
+        let cal = 0;
+        let p = 0;
+        let f = 0;
+        let c = 0;
+
+        for (let i = 0; i < json.result.length; i++) {
+          cal += Number(json.result[i].calorie);
+          p += Number(json.result[i].protein);
+          f += Number(json.result[i].fat);
+          c += Number(json.result[i].carbohydrate);
+        }
+
+        setTodaysCalorie(cal);
+        setTodaysProtein(p);
+        setTodaysFat(f);
+        setTodaysCarbohydrate(c);
+        setFoodList(json.result);
+  
+      } catch (error) {
+        console.error('Fetch error:', error);
+      }
+    };
+
+    fetchData();
   },[])
 
   const screenWidth = window.screen.width;
@@ -35,7 +63,7 @@ const TodaysInfo = () => {
   const cy = screenHeight / 4;
   const iR = screenWidth / 2 - 30;
   const oR = screenWidth / 2 - 28;
-  const value = 1280; // ニードルの位置を示す値
+  const value = todaysCalorie; // ニードルの位置を示す値
 
   const needle = (value, data, cx, cy, iR, oR, color) => {
     let total = 0;
@@ -63,9 +91,9 @@ const TodaysInfo = () => {
   };
   
   const data = [
-    { category: 'P（タンパク質）', target: 60, achievement: 28 },
-    { category: 'F（脂質）', target: 45, achievement: 60 },
-    { category: 'C（炭水化物）', target: 180, achievement: 122 },
+    { category: 'P（タンパク質）', target: 60, achievement: todaysProtein },
+    { category: 'F（脂質）', target: 45, achievement: todaysFat },
+    { category: 'C（炭水化物）', target: 180, achievement: todaysCarbohydrate },
   ];
 
   const chartData = data.map((entry) => ({
@@ -151,11 +179,11 @@ const TodaysInfo = () => {
           <table className='food-history__table'>
             <thead>
               <tr>
+                <th className='col-note'></th>
                 <th className='col-calorie'>Calorie</th>
                 <th className='col-pfc'>P</th>
                 <th className='col-pfc'>F</th>
                 <th className='col-pfc'>C</th>
-                <th className='col-note'></th>
                 <th className='col-x'></th>
               </tr>
             </thead>
@@ -163,12 +191,12 @@ const TodaysInfo = () => {
               {
                 foodList.map((food, index) => (
                   <tr>
+                    <td className='col-note'>{food.note}</td>
                     <td className='col-calorie'>{food.calorie}</td>
                     <td className='col-pfc'>{food.protein}</td>
                     <td className='col-pfc'>{food.fat}</td>
                     <td className='col-pfc'>{food.carbohydrate}</td>
-                    <td className='col-note'>{food.note}</td>
-                    <td className='col-x'>X</td>
+                    <td className='col-x'></td>
                   </tr>
                 ))
               }
