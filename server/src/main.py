@@ -64,3 +64,10 @@ def pfc_input():
   result = pfc.insert(rd['year'], rd['month'], rd['date'], rd['hour'], rd['minute'], rd['calorie'], rd['protein'], rd['fat'], rd['carbohydrate'], rd['note'])
 
   return { 'result' : result }
+
+@app.route('/todaysInfo', methods=['POST'])
+def todays_info():
+  
+  result = pfc.select_todays_data()
+
+  return { 'result' : result }

@@ -3,6 +3,7 @@ import weight from '../../../img/weight_white.png';
 import food from '../../../img/food_white.png';
 import graph from '../../../img/graph_white.png';
 import flag from '../../../img/flag_white.png';
+import barChart from '../../../img/bar_chart_white.png';
 import './index.scss';
 
 const Footer = () => {
@@ -30,6 +31,12 @@ const Footer = () => {
         <Link to='/WeightInquiry' className='footer__link'>
           <img className='footer__icon' src={ graph } alt='graph'/>
           <span>グラフ</span>
+        </Link>
+      </div>
+      <div className='footer__button'>
+        <Link to='/TodaysInfo' className='footer__link'>
+          <img className='footer__icon' src={ barChart } alt='barChart'/>
+          <span>今日</span>
         </Link>
       </div>
     </div>

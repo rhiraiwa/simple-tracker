@@ -57,38 +57,38 @@ const WeightInquiry = () => {
   useEffect(() => {
     // 今日の日付を取得
     const today = new Date();
-    const todayISO = today.toISOString().slice(0, 10); // ISO形式の日付に変換
-  
+    const todayJST = new Date(today.getTime() + 9 * 60 * 60 * 1000); // 日本時間に変換
+    
     // 期間の開始日を計算する関数
     const calculateStartDate = (days) => {
-      const startDate = new Date(today);
-      startDate.setDate(today.getDate() - days); // 指定された日数を引く
+      const startDate = new Date(todayJST);
+      startDate.setDate(todayJST.getDate() - days); // 指定された日数を引く
       return startDate.toISOString().slice(0, 10); // ISO形式の日付に変換
     };
-  
+    
     const twoWeeksAgoISO = calculateStartDate(14);
     const monthAgoISO = calculateStartDate(30);
-  
+    
     if (selectedRadio === 2) {
       setDisplayData(weight);
       return;
     }
-  
+    
     // フィルタリング処理
     const filteredData = weight.filter((item) => {
       const itemDate = item.date;
       switch (selectedRadio) {
         case 0:
-          return itemDate >= twoWeeksAgoISO && itemDate <= todayISO;
+          return itemDate >= twoWeeksAgoISO && itemDate <= todayJST.toISOString().slice(0, 10);
         case 1:
-          return itemDate >= monthAgoISO && itemDate <= todayISO;
+          return itemDate >= monthAgoISO && itemDate <= todayJST.toISOString().slice(0, 10);
         default:
           return false;
       }
     });
-  
+    
     setDisplayData(filteredData);
-  }, [weight, selectedRadio]);  
+  }, [weight, selectedRadio]);
 
   return (
     <React.Fragment>
