@@ -4,6 +4,7 @@ import WeightInput from "./components/pages/WeightInput";
 import WeightInquiry from "./components/pages/WeightInquiry";
 import UserSetting from "./components/pages/UserSetting";
 import PFCInput from "./components/pages/PFCInput";
+import TodaysInfo from "./components/pages/TodaysInfo";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path='/WeightInquiry' element={ <WeightInquiry/> }/>
         <Route path='/UserSetting' element={ <UserSetting/> }/>
         <Route path='/PFCInput' element={ <PFCInput/> }/>
+        <Route path='/TodaysInfo' element={ <TodaysInfo/> }/>
       </Routes>
     </div>
   );

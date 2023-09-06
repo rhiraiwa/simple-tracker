@@ -1,0 +1,87 @@
+@import '../../../common.scss';
+
+.todays-info {
+  @include common-page;
+
+  .container-title {
+    height: 2.0rem;
+    margin-right: auto;
+
+    label {
+      // display: block;
+      margin-right: auto;
+      height: 2.0rem;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .custom-responsive-container {
+    width:100%;
+    height: calc((100vh - 24.0rem) / 2);
+  }
+
+  .recharts-surface {
+    background-color: #fff;
+  }
+
+  .food-history {
+    width: 100%;
+    height: 10.0rem;
+    overflow: scroll;
+    // border:  1px solid #a4c4e1;
+
+    table {
+      border-collapse: collapse;
+      width: calc(100% - 1.0rem);
+      margin: 0 0.5rem;
+      // border:  1px solid #a4c4e1;
+
+      thead {
+        position: sticky;
+        top: 0;
+        background-color: #a4c4e1;
+        // border: #a4c4e1 1px solid;
+      }
+
+      tbody {
+        tr{
+          background-color: #fff;
+          border: 1px solid #ddd;
+        }
+      }
+
+      .col-calorie {
+        width: 4.0rem;
+        text-align: center;
+      }
+      .col-pfc {
+        width: 2.5rem;
+        text-align: center;
+      }
+      .col-x {
+        width: 1.0rem;
+        text-align: center;
+      }
+    }
+
+  }
+}
+
+.custom-tooltip {
+  border: 2px solid #DDD;
+  padding: 0 1.0rem;
+  background-color: #fff;
+
+  .label-achievement {
+    color: #a4c4e1;
+  }
+
+  .label-over {
+    color: #f1d6df;
+  }
+
+  .label-under {
+    color: #a4e1a9;
+  }
+}
