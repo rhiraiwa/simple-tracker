@@ -136,7 +136,7 @@ const WeightInquiry = () => {
         </div>
         
       </div>
-      <Footer/>
+      <Footer active={3}/>
     </React.Fragment>
   );
 }

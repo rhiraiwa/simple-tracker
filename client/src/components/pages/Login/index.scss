@@ -2,6 +2,8 @@
 
 .login {
   @include common-page;
+  height: 100vh;
+  margin: 0;
 
   &__title {
     color: $primary-blue;

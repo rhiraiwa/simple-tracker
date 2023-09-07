@@ -199,7 +199,7 @@ const PFCInput = () => {
                  onChange={ handleCalorie }
                  type='number'
                  />
-          <span className='form__unit'>kCal</span>
+          <span className='form__unit'>kcal</span>
         </div>
         <div className='form__input'>
           <span>P（タンパク質）：</span>
@@ -242,7 +242,7 @@ const PFCInput = () => {
           <MessageBox message={'登録しました'} closeMethod={ ()=>setIsOpen(false) }/>
         )
       }
-      <Footer/>
+      <Footer active={1}/>
     </React.Fragment>
   );
 }

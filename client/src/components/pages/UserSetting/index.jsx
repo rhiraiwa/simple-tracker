@@ -134,7 +134,7 @@ const UserSetting = () => {
           <MessageBox message={'目標値を変更しました'} closeMethod={ ()=>setIsOpen(false) }/>
         )
       }
-      <Footer/>
+      <Footer active={0}/>
     </React.Fragment>
   );
 }

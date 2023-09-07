@@ -30,7 +30,12 @@
 
   &__button {
     width: 3.0rem;
-    margin: auto 1.0rem;
+    // margin: auto 1.0rem;
+    padding: 0.8rem;
+
+    &.active {
+      background-color: $secondary-blue;
+    }
   }
 
   &__icon {

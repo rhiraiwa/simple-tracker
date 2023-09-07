@@ -196,7 +196,7 @@ const WeightInput = () => {
           <MessageBox message={'登録しました'} closeMethod={ ()=>setIsOpen(false) }/>
         )
       }
-      <Footer/>
+      <Footer active={2}/>
     </React.Fragment>
   );
 }

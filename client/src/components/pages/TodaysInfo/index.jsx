@@ -7,10 +7,10 @@ import './index.scss';
 
 const TodaysInfo = () => {
 
-  const [todaysCalorie, setTodaysCalorie] = useState('');
-  const [todaysProtein, setTodaysProtein] = useState('');
-  const [todaysFat, setTodaysFat] = useState('');
-  const [todaysCarbohydrate, setTodaysCarbohydrate] = useState('');
+  const [todaysCalorie, setTodaysCalorie] = useState(0);
+  const [todaysProtein, setTodaysProtein] = useState(0);
+  const [todaysFat, setTodaysFat] = useState(0);
+  const [todaysCarbohydrate, setTodaysCarbohydrate] = useState(0);
   const [foodList, setFoodList] = useState([]);
 
   useEffect(() => {
@@ -55,9 +55,9 @@ const TodaysInfo = () => {
 
   const RADIAN = Math.PI / 180;
   const calorie = [
-    { name: 'sectionOne', value: 500, line: 250,  color: '#a4c4e1' },
-    { name: 'sectionTwo', value: 500, line: 750, color: '#a4c4e1' },
-    { name: 'sectionThree', value: 500, line: 1250, color: '#a4c4e1' }
+    { name: 'sectionOne', value: 500, line: '250',  color: '#a4c4e1' },
+    { name: 'sectionTwo', value: 500, line: '750', color: '#a4c4e1' },
+    { name: 'sectionThree', value: 500, line: '1,250', color: '#a4c4e1' }
   ];
   const cx = screenWidth / 2 - 4;
   const cy = screenHeight / 4;
@@ -83,11 +83,15 @@ const TodaysInfo = () => {
     const ybb = y0 + r * cos;
     const xp = x0 + length * cos;
     const yp = y0 + length * sin;
+    const yc = y0 - length * 0.5;
 
-    return [
-      <circle cx={x0} cy={y0} r={r} fill={color} stroke="none" />,
-      <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="none" fill={color} />,
-    ];
+    return (
+      <>
+        <circle cx={x0} cy={y0} r={r} fill={color} stroke="none" />
+        <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="none" fill={color} />
+        <text className='calorie-value' x={x0} y={yc} textAnchor="middle" fill="#f1d6df" >{`${todaysCalorie.toLocaleString()} kcal`}</text>
+      </>
+    );
   };
   
   const data = [
@@ -204,7 +208,7 @@ const TodaysInfo = () => {
           </table>
         </div>
       </div>
-      <Footer/>
+      <Footer active={4}/>
     </React.Fragment>
   );
 }

@@ -40,9 +40,9 @@ def insert(year, month, date, hour, minute, calorie, protein, fat, carbohydrate,
     '{input_date}',
     {new_id},
     {calorie},
-    {protein},
-    {fat},
-    {carbohydrate},
+    {protein if protein != '' else 'null'},
+    {fat if fat != '' else 'null'},
+    {carbohydrate if carbohydrate != '' else 'null'},
     '{note}'
     );
   '''
@@ -68,8 +68,6 @@ def select_todays_data():
   '''
 
   results = []
-
-  print(query)
 
   try:
     conn = db.get_conn()            # DBに接続
