@@ -7,6 +7,8 @@ import './index.scss';
 
 const TodaysInfo = () => {
 
+  const [yearMonthDate, setYearMonthDate] = useState('');
+
   const [todaysCalorie, setTodaysCalorie] = useState(0);
   const [todaysProtein, setTodaysProtein] = useState(0);
   const [todaysFat, setTodaysFat] = useState(0);
@@ -14,7 +16,19 @@ const TodaysInfo = () => {
   const [foodList, setFoodList] = useState([]);
 
   useEffect(() => {
+    const getToday = async () => {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = ('0'+(today.getMonth()+1)).slice(-2);
+      const dd = ('0'+(today.getDate())).slice(-2);
+  
+      setYearMonthDate(`${yyyy}/${mm}/${dd}`);
+    }
+
     const fetchData = async () => {
+      
+      getToday();
+
       try {
         const response = await fetch(`${baseUri}/todaysInfo`, {
           credentials: 'include',
@@ -59,10 +73,15 @@ const TodaysInfo = () => {
     { name: 'sectionTwo', value: 500, line: '750', color: '#a4c4e1' },
     { name: 'sectionThree', value: 500, line: '1,250', color: '#a4c4e1' }
   ];
-  const cx = screenWidth / 2 - 4;
-  const cy = screenHeight / 4;
-  const iR = screenWidth / 2 - 30;
-  const oR = screenWidth / 2 - 28;
+  // const cx = screenWidth / 2 - 4;
+  // const cy = screenHeight / 4;
+  // const iR = screenWidth / 2 - 30;
+  // const oR = screenWidth / 2 - 28;
+  //
+  const cx = screenWidth / 2;
+  const cy = screenHeight / 4.5;
+  const iR = screenWidth / 2.5 - 30;
+  const oR = screenWidth / 2.5 - 28;
   const value = todaysCalorie; // ニードルの位置を示す値
 
   const needle = (value, data, cx, cy, iR, oR, color) => {
@@ -132,8 +151,11 @@ const TodaysInfo = () => {
     <React.Fragment>
       <Header/>
       <div className='todays-info'>
+        <div className='container-title-date'>
+         <label>{yearMonthDate}</label>
+        </div>
         <div className='container-title'>
-         <label>カロリー</label>
+         <label>カロリー・PFC</label>
         </div>
         <div className='custom-responsive-container'>
           <ResponsiveContainer width="100%">
@@ -161,9 +183,9 @@ const TodaysInfo = () => {
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <div className='container-title'>
+        {/* <div className='container-title'>
          <label>PFCバランス</label>
-        </div>
+        </div> */}
         <div className='custom-responsive-container'>
           <ResponsiveContainer width="100%">
             <BarChart data={chartData}>
