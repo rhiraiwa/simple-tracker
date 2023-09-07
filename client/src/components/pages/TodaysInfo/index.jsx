@@ -188,19 +188,19 @@ const TodaysInfo = () => {
                 <th className='col-pfc'>P</th>
                 <th className='col-pfc'>F</th>
                 <th className='col-pfc'>C</th>
-                <th className='col-x'></th>
+                {/* <th className='col-x'></th> */}
               </tr>
             </thead>
             <tbody>
               {
                 foodList.map((food, index) => (
-                  <tr>
+                  <tr key={index}>
                     <td className='col-note'>{food.note}</td>
                     <td className='col-calorie'>{food.calorie}</td>
                     <td className='col-pfc'>{food.protein}</td>
                     <td className='col-pfc'>{food.fat}</td>
                     <td className='col-pfc'>{food.carbohydrate}</td>
-                    <td className='col-x'></td>
+                    {/* <td className='col-x'></td> */}
                   </tr>
                 ))
               }
