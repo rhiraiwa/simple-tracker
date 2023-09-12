@@ -71,3 +71,11 @@ def todays_info():
   result = pfc.select_todays_data()
 
   return { 'result' : result }
+
+@app.route('/pfcUpdate', methods=['POST'])
+def pfc_update():
+  
+  rd = json.loads(request.data)
+  result = pfc.update(rd['id'], rd['calorie'], rd['protein'], rd['fat'], rd['carbohydrate'], rd['note'])
+
+  return { 'result' : result }

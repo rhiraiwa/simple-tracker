@@ -4,7 +4,7 @@
   @include common-page;
 
   .container-title-date {
-    // height: 2.0rem;
+    height: 2.0rem;
     width: 100%;
     background-color: $secondary-blue;
     font-size: 1.5rem;
@@ -26,9 +26,13 @@
     }
   }
 
-  .custom-responsive-container {
+  .calorie-responsive-container {
     width:100%;
     height: calc((100vh - 14.0rem) * 2 / 5);
+  }
+  .pfc-responsive-container {
+    width:100%;
+    height: calc((100vh - 14.0rem) * 1.75 / 5);
   }
 
   .recharts-surface {
@@ -41,10 +45,8 @@
 
   .food-history {
     width: 100%;
-    // height: 10.0rem;
-    height: calc((100vh - 15.0rem) / 5);
+    height: calc((100vh - 15.0rem) * 1.25 / 5);
     overflow: scroll;
-    // border:  1px solid #a4c4e1;
 
     table {
       border-collapse: collapse;
@@ -74,9 +76,14 @@
         width: 2.5rem;
         text-align: center;
       }
-      .col-x {
+      .col-img {
         width: 1.0rem;
-        text-align: center;
+
+        img {
+          height: 1.25rem;
+          padding: 0.25rem;
+        vertical-align: middle;
+        }
       }
       .col-note {
         padding-left: 0.5rem;
@@ -101,5 +108,52 @@
 
   .label-under {
     color: #a4e1a9;
+  }
+}
+
+
+.edit-pfc-modal {
+  @include common-page;
+  height: auto;
+
+  .modal-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 1.0rem;
+
+    &__label {
+      width: 5.0rem;
+      text-align: right;
+      padding-right: 0.5rem;
+    }
+
+    &__input {
+      @include common-input;
+      width: 18.0rem;
+      margin-top: 1.0rem;
+
+      &--number {
+        @include common-input;
+        width: 4.0rem;
+        text-align: right;
+      }
+    }
+
+    &__button {
+      @include common-button;
+      margin: 1.0rem;
+
+      &--cancel {
+        @include common-button;
+
+        width: 6.75rem;
+        margin: 0.5rem;
+        color: $primary-blue;
+        background-color: #fff;
+        border: 1px solid $primary-blue;
+      }
+    }
   }
 }

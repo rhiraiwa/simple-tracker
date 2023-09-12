@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { baseUri } from '../../../const';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, Label } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Label } from 'recharts';
 import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
+import edit from '../../../img/edit_primary_blue.png';
 import './index.scss';
+import Modal from '../../molecules/Modal';
+import MessageBox from '../../organisms/MessageBox';
 
 const TodaysInfo = () => {
 
@@ -14,6 +17,9 @@ const TodaysInfo = () => {
   const [todaysFat, setTodaysFat] = useState(0);
   const [todaysCarbohydrate, setTodaysCarbohydrate] = useState(0);
   const [foodList, setFoodList] = useState([]);
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
 
   useEffect(() => {
     const getToday = async () => {
@@ -147,6 +153,15 @@ const TodaysInfo = () => {
     );
   };
 
+  const callBackMethod = () => {
+    setModalContent(<MessageBox message={'更新しました'} closeMethod={()=>window.location.reload()}/>);
+  }
+
+  const openEditModal = (food) => {
+    setIsOpen(true);
+    setModalContent(<EditContent values={food} closeMethod={()=>setIsOpen(false)} callBackMethod={callBackMethod}/>);
+  }
+
   return (
     <React.Fragment>
       <Header/>
@@ -157,7 +172,7 @@ const TodaysInfo = () => {
         <div className='container-title'>
          <label>カロリー・PFC</label>
         </div>
-        <div className='custom-responsive-container'>
+        <div className='calorie-responsive-container'>
           <ResponsiveContainer width="100%">
             <PieChart>
               <Pie
@@ -183,10 +198,7 @@ const TodaysInfo = () => {
             </PieChart>
           </ResponsiveContainer>
         </div>
-        {/* <div className='container-title'>
-         <label>PFCバランス</label>
-        </div> */}
-        <div className='custom-responsive-container'>
+        <div className='pfc-responsive-container'>
           <ResponsiveContainer width="100%">
             <BarChart data={chartData}>
               <XAxis dataKey="category" />
@@ -210,25 +222,34 @@ const TodaysInfo = () => {
                 <th className='col-pfc'>P</th>
                 <th className='col-pfc'>F</th>
                 <th className='col-pfc'>C</th>
-                {/* <th className='col-x'></th> */}
+                {/* <th className='col-img'></th> */}
               </tr>
             </thead>
             <tbody>
               {
                 foodList.map((food, index) => (
-                  <tr key={index}>
+                  <tr key={index} onClick={ () => openEditModal(food) }>
                     <td className='col-note'>{food.note}</td>
                     <td className='col-calorie'>{food.calorie}</td>
                     <td className='col-pfc'>{food.protein}</td>
                     <td className='col-pfc'>{food.fat}</td>
                     <td className='col-pfc'>{food.carbohydrate}</td>
-                    {/* <td className='col-x'></td> */}
+                    {/* <td className='col-img'>
+                      <img className='food-history__img' src={ edit } alt='edit'/>
+                    </td> */}
                   </tr>
                 ))
               }
             </tbody>
           </table>
         </div>
+        {
+          isOpen && (
+            <Modal>
+              {modalContent}
+            </Modal>
+          )
+        }
       </div>
       <Footer active={4}/>
     </React.Fragment>
@@ -256,6 +277,112 @@ const CustomTooltip = ({ active, payload }) => {
   }
 
   return null;
+};
+
+const EditContent = ({values, closeMethod, callBackMethod}) => {
+  const id = values.id;
+  const [calorie, setCalorie] = useState(values.calorie);
+  const [protein, setProtein] = useState(values.protein);
+  const [fat, setFat] = useState(values.fat);
+  const [carbohydrate, setCarbohydrate] = useState(values.carbohydrate);
+  const [note, setNote] = useState(values.note);
+
+  const handleCalorie = (e) => {
+    const value = e.target.value;
+
+    // より詳細な入力チェックを入るつもり（.xxとか）
+    if (value.replace('.', '').length > 6) return;
+    setCalorie(value);
+  }
+
+  const handleProtein = (e) => {
+    const value = e.target.value;
+
+    // より詳細な入力チェックを入るつもり（.xxとか）
+    if (value.replace('.', '').length > 6) return;
+    setProtein(value);
+  }
+
+  const handleFat = (e) => {
+    const value = e.target.value;
+
+    // より詳細な入力チェックを入るつもり（.xxとか）
+    if (value.replace('.', '').length > 6) return;
+    setFat(value);
+  }
+
+  const handleCarbohydrate = (e) => {
+    const value = e.target.value;
+
+    // より詳細な入力チェックを入るつもり（.xxとか）
+    if (value.replace('.', '').length > 6) return;
+    setCarbohydrate(value);
+  }
+
+  const handleNote = (e) => {
+    const value = e.target.value;
+
+    if (value.length > 200) {
+      alert('上限200文字です');
+      return;
+    }
+
+    setNote(value);
+  }
+
+  const submitPFC = async () => {
+    try {
+      await fetch(`${baseUri}/pfcUpdate`, {
+        credentials:'include',
+        mode: "cors",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify({
+          id: id,
+          calorie: calorie,
+          protein: protein !== null ? protein : '',
+          fat: fat !== null ? fat : '',
+          carbohydrate: carbohydrate !== null ? carbohydrate : '',
+          note: note !== null ? note : ''
+        })
+      });
+
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
+
+    callBackMethod();
+  }
+
+  return (
+    <div className='edit-pfc-modal'>
+      <div className='modal-row'>
+        <input className='modal-row__input' type='text' value={note} onChange={handleNote}/>
+      </div>
+      <div className='modal-row'>
+        <label className='modal-row__label'>カロリー：</label>
+        <input className='modal-row__input--number' type='number' value={calorie} onChange={handleCalorie}/>
+      </div>
+      <div className='modal-row'>
+        <label className='modal-row__label'>P：</label>
+        <input className='modal-row__input--number' type='number' value={protein} onChange={handleProtein}/>
+      </div>
+      <div className='modal-row'>
+        <label className='modal-row__label'>F：</label>
+        <input className='modal-row__input--number' type='number' value={fat} onChange={handleFat}/>
+      </div>
+      <div className='modal-row'>
+        <label className='modal-row__label'>C：</label>
+        <input className='modal-row__input--number' type='number' value={carbohydrate} onChange={handleCarbohydrate}/>
+      </div>
+      <div className='modal-row'>
+        <button className='modal-row__button' onClick={ submitPFC }>変更</button>
+        <button className='modal-row__button--cancel' onClick={ closeMethod }>キャンセル</button>
+      </div>
+    </div>
+  );
 };
 
 export default TodaysInfo;

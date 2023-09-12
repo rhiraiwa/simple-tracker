@@ -49,6 +49,20 @@ def insert(year, month, date, hour, minute, calorie, protein, fat, carbohydrate,
 
   execute_query(query)
 
+def update(id, calorie, protein, fat, carbohydrate, note):
+
+  query = f'''
+    update CALORIE
+    set 
+    calorie = {calorie},
+    protein = {protein if protein != '' else 'null'},
+    fat = {fat if fat != '' else 'null'},
+    carbohydrate = {carbohydrate if carbohydrate != '' else 'null'},
+    note = '{note}'
+    where id = {id};
+  '''
+
+  execute_query(query)
 
 def select_todays_data():
   query = f'''
