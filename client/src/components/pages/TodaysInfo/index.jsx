@@ -19,7 +19,7 @@ const TodaysInfo = () => {
   const [foodList, setFoodList] = useState([]);
 
   const [limit, setLimit] = useState(0);
-  const diet = 230; // 1ヶ月で1kg痩せる
+  const diet = 300; // 1ヶ月で1kg痩せる
 
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -36,7 +36,7 @@ const TodaysInfo = () => {
 
     const calcLimit = async (weight) => {
       //（9.247×体重kg＋3.098×身長cm−4.33×年齢+447.593）基礎代謝 * 軽い運動
-      let wLimit =Math.round(((9.247*weight) + (3.098*161.5) - (4.33*30) +447.593) * 1.375 )
+      let wLimit =Math.round(((9.247*weight) + (3.098*161.5) - (4.33*30) +447.593) * 1.2 )
       // 基礎代謝基準値・身体活動レベルが固定
       // let wLimit = Math.round((21.9 * weight * 1.5) - 230);
       // let wLimit = Math.round(21.9 * weight * 1.5);
