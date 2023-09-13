@@ -69,8 +69,9 @@ def pfc_input():
 def todays_info():
   
   result = pfc.select_todays_data()
+  w = weight.todays()
 
-  return { 'result' : result }
+  return { 'result' : result, 'weight' : w }
 
 @app.route('/pfcUpdate', methods=['POST'])
 def pfc_update():

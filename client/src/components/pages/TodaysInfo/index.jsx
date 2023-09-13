@@ -18,6 +18,9 @@ const TodaysInfo = () => {
   const [todaysCarbohydrate, setTodaysCarbohydrate] = useState(0);
   const [foodList, setFoodList] = useState([]);
 
+  const [limit, setLimit] = useState(0);
+  const diet = 230; // 1ヶ月で1kg痩せる
+
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
@@ -29,6 +32,15 @@ const TodaysInfo = () => {
       const dd = ('0'+(today.getDate())).slice(-2);
   
       setYearMonthDate(`${yyyy}/${mm}/${dd}`);
+    }
+
+    const calcLimit = async (weight) => {
+      //（9.247×体重kg＋3.098×身長cm−4.33×年齢+447.593）基礎代謝 * 軽い運動
+      let wLimit =Math.round(((9.247*weight) + (3.098*161.5) - (4.33*30) +447.593) * 1.375 )
+      // 基礎代謝基準値・身体活動レベルが固定
+      // let wLimit = Math.round((21.9 * weight * 1.5) - 230);
+      // let wLimit = Math.round(21.9 * weight * 1.5);
+      setLimit(wLimit);
     }
 
     const fetchData = async () => {
@@ -56,6 +68,8 @@ const TodaysInfo = () => {
           c += Number(json.result[i].carbohydrate);
         }
 
+        calcLimit(json.weight);
+
         setTodaysCalorie(cal);
         setTodaysProtein(p);
         setTodaysFat(f);
@@ -75,22 +89,17 @@ const TodaysInfo = () => {
 
   const RADIAN = Math.PI / 180;
   const calorie = [
-    { name: 'sectionOne', value: 500, line: '250',  color: '#a4c4e1' },
-    { name: 'sectionTwo', value: 500, line: '750', color: '#a4c4e1' },
-    { name: 'sectionThree', value: 500, line: '1,250', color: '#a4c4e1' }
+    { name: 'sectionOne', value: Math.round(limit/3), line: Math.round(limit/6),  color: '#a4c4e1' },
+    { name: 'sectionTwo', value: Math.round(limit/3), line: Math.round(limit/2), color: '#a4c4e1' },
+    { name: 'sectionThree', value: Math.round(limit/3), line: Math.round(limit*5/6), color: '#a4c4e1' }
   ];
-  // const cx = screenWidth / 2 - 4;
-  // const cy = screenHeight / 4;
-  // const iR = screenWidth / 2 - 30;
-  // const oR = screenWidth / 2 - 28;
-  //
   const cx = screenWidth / 2;
-  const cy = screenHeight / 4.5;
+  const cy = screenHeight / 5.5;
   const iR = screenWidth / 2.5 - 30;
   const oR = screenWidth / 2.5 - 28;
   const value = todaysCalorie; // ニードルの位置を示す値
 
-  const needle = (value, data, cx, cy, iR, oR, color) => {
+  const needle = (value, data, width, cx, cy, iR, oR, color, isMain) => {
     let total = 0;
     data.forEach((v) => {
       total += v.value;
@@ -99,7 +108,7 @@ const TodaysInfo = () => {
     const length = (iR + 2 * oR) / 3;
     const sin = Math.sin(-RADIAN * ang);
     const cos = Math.cos(-RADIAN * ang);
-    const r = 5;
+    const r = width;
     const x0 = cx + 5;
     const y0 = cy + 5;
     const xba = x0 + r * sin;
@@ -109,12 +118,27 @@ const TodaysInfo = () => {
     const xp = x0 + length * cos;
     const yp = y0 + length * sin;
     const yc = y0 - length * 0.5;
+    const xmin = x0-length;
+    const xmax = x0+length;
+    
+    if (isNaN(xba)) return null;
 
     return (
       <>
         <circle cx={x0} cy={y0} r={r} fill={color} stroke="none" />
         <path d={`M${xba} ${yba}L${xbb} ${ybb} L${xp} ${yp} L${xba} ${yba}`} stroke="none" fill={color} />
-        <text className='calorie-value' x={x0} y={yc} textAnchor="middle" fill="#f1d6df" >{`${todaysCalorie.toLocaleString()} kcal`}</text>
+        {
+          isMain ? (
+            <>
+              <text className='calorie-value' x={x0} y={yc} textAnchor="middle" fill="#f1d6df" >{`${todaysCalorie.toLocaleString()} kcal`}</text>
+              <text className='' x={xmin-5} y={y0} textAnchor="end" fill="#a4c4e1" >{0}</text>
+              <text className='' x={xmin} y={y0-2} textAnchor="start" fill="#a4c4e1" >_</text>
+              <text className='' x={xmax+5} y={y0} textAnchor="start" fill="#a4c4e1" >{limit.toLocaleString()}</text>
+              <text className='' x={xmax} y={y0-2} textAnchor="end" fill="#a4c4e1" >_</text>
+            </>
+          ) :
+            <text className='' x={xp+5} y={yp} textAnchor="start" fill="#ccc" >{(limit-diet).toLocaleString()}</text>
+        }
       </>
     );
   };
@@ -137,7 +161,7 @@ const TodaysInfo = () => {
   const renderCustomizedLabelLine = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, payload }) => {
     // ラベルラインの始点を弧の終点に設定
     const startRadius = outerRadius; // 弧の外周
-    const endRadius = outerRadius + 15; // ラベルラインの終点をセルの外側に設定する値
+    const endRadius = outerRadius - 15; // ラベルラインの終点をセルの外側に設定する値
     const startX = cx + startRadius * Math.cos(-midAngle * (Math.PI / 180)) ;
     const startY = cy + startRadius * Math.sin(-midAngle * (Math.PI / 180)) ;
     const endX = cx + endRadius * Math.cos(-midAngle * (Math.PI / 180)) ;
@@ -146,9 +170,9 @@ const TodaysInfo = () => {
     return (
       <>
         <line x1={startX} y1={startY} x2={endX} y2={endY} stroke="#a4c4e1" />
-        <text x={endX} y={endY} dy={-15} textAnchor="middle" fill="#a4c4e1">
+        {/* <text x={endX} y={endY} dy={-15} textAnchor="middle" fill="#a4c4e1">
           {payload.payload.line}
-        </text>
+        </text> */}
       </>
     );
   };
@@ -194,7 +218,8 @@ const TodaysInfo = () => {
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}
               </Pie>
-              {needle(value, calorie, cx, cy, iR, oR, '#ff9999')}
+              {needle(limit-diet, calorie, 2, cx, cy, iR, oR, '#ccc', false)}
+              {needle(value, calorie, 5, cx, cy, iR, oR, '#ff9999', true)}
             </PieChart>
           </ResponsiveContainer>
         </div>
