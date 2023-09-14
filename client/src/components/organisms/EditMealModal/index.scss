@@ -1,0 +1,47 @@
+@import '../../../common.scss';
+
+.edit-pfc-modal {
+  @include common-page;
+  height: auto;
+
+  .modal-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 1.0rem;
+
+    &__label {
+      width: 5.0rem;
+      text-align: right;
+      padding-right: 0.5rem;
+    }
+
+    &__input {
+      @include common-input;
+      width: 18.0rem;
+      margin-top: 1.0rem;
+
+      &--number {
+        @include common-input;
+        width: 4.0rem;
+        text-align: right;
+      }
+    }
+
+    &__button {
+      @include common-button;
+      margin: 1.0rem;
+
+      &--cancel {
+        @include common-button;
+
+        width: 6.75rem;
+        margin: 0.5rem;
+        color: $primary-blue;
+        background-color: #fff;
+        border: 1px solid $primary-blue;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { baseUri } from '../../../const'
+import { baseUri, pageNo } from '../../../const'
 import Header from '../../organisms/Header';
 import LineChartComponent from '../../templates/LineChartComponent';
 import Footer from '../../organisms/Footer';
@@ -136,7 +136,7 @@ const WeightInquiry = () => {
         </div>
         
       </div>
-      <Footer active={3}/>
+      <Footer active={pageNo.weightInquiry}/>
     </React.Fragment>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { baseUri } from '../../../const';
+import { baseUri, pageNo } from '../../../const';
 import Header from '../../organisms/Header';
 import reload from '../../../img/reload_primary_blue.png';
 import MessageBox from '../../organisms/MessageBox';
@@ -32,7 +32,6 @@ const UserSetting = () => {
         const json = await response.json();
 
         if (json.result === null) return;
-        // console.log(JSON.parse(json.result)[0].weight_goal);
 
         setWeightGoal(JSON.parse(json.result)[0].weight_goal);
         setBFPGoal(JSON.parse(json.result)[0].BFP_goal);
@@ -134,7 +133,7 @@ const UserSetting = () => {
           <MessageBox message={'目標値を変更しました'} closeMethod={ ()=>setIsOpen(false) }/>
         )
       }
-      <Footer active={0}/>
+      <Footer active={pageNo.userSetting}/>
     </React.Fragment>
   );
 }

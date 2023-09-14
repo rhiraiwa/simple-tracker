@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { baseUri } from '../../../const';
+import { baseUri, pageNo } from '../../../const';
 import Header from '../../organisms/Header';
 import MessageBox from '../../organisms/MessageBox';
 import Footer from '../../organisms/Footer';
@@ -242,7 +242,7 @@ const PFCInput = () => {
           <MessageBox message={'登録しました'} closeMethod={ ()=>setIsOpen(false) }/>
         )
       }
-      <Footer active={1}/>
+      <Footer active={pageNo.PFCInput}/>
     </React.Fragment>
   );
 }
