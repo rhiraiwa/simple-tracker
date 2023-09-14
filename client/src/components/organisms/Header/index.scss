@@ -2,7 +2,7 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 4.0rem;
   width: 100%;
   position: absolute;
@@ -13,6 +13,8 @@
   &__title {
     color: $background-color;
     font-size: 1.5rem;
+    display: flex;
+    margin-right: auto;
     
     .logo-icon {
       

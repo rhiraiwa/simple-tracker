@@ -6,5 +6,6 @@ export const pageNo = {
   PFCInput: 1,
   weightInput: 2,
   weightInquiry: 3,
-  todaysInfo: 4
+  todaysInfo: 4,
+  inactive: 999
 }
