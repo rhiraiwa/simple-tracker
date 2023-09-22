@@ -15,3 +15,21 @@
   font-size: 16px;
   color: $text-color;
 }
+
+.pfc-search {
+  height: 3.5rem;
+  width: 3.5rem;
+  position: absolute;
+  right: 1.0rem;
+  bottom: 5.0rem;
+  border: 5px solid $secondary-blue;
+  border-radius: 50%;
+  background-color: $secondary-blue;
+  // background-color: #fff;
+
+  &__icon {
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: 0.5rem;
+  }
+}
