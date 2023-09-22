@@ -80,3 +80,11 @@ def pfc_update():
   result = pfc.update(rd['id'], rd['calorie'], rd['protein'], rd['fat'], rd['carbohydrate'], rd['note'])
 
   return { 'result' : result }
+
+@app.route('/getUserInfo', methods=['POST'])
+def get_userInfo():
+  
+  rd = json.loads(request.data)
+  result = user.get_user_info(rd['username'])
+
+  return { 'result' : result }

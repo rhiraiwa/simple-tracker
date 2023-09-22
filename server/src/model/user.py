@@ -88,3 +88,21 @@ def setGoal(name, goal, target):
     if conn != None:
       cursor.close()              # カーソルを終了
       conn.close()                # DB切断
+
+def get_user_info(name):
+  query = f'''
+    select age, gender, height, activity_level from USER
+    where name = '{name}';
+  '''
+
+  result_row = []
+  rows = execute_query(query)
+
+  ### ２つのリストを辞書へ変換
+  for data_tuple in rows:
+    label_tuple = ('age', 'gender', 'height', 'activity_level')
+    row_dict = {label: data for data, label in zip(data_tuple, label_tuple)} 
+    result_row.append(row_dict)
+
+  output_json = json.dumps(result_row, ensure_ascii=False)
+  return output_json
