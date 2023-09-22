@@ -4,9 +4,8 @@ import Header from '../../organisms/Header';
 import MessageBox from '../../organisms/MessageBox';
 import Footer from '../../organisms/Footer';
 import search from '../../../img/search_white.png';
-import EditMaelModal from '../../organisms/EditMealModal';
-import './index.scss';
 import Modal from '../../molecules/Modal';
+import './index.scss';
 
 const PFCInput = () => {
   
@@ -32,7 +31,13 @@ const PFCInput = () => {
 
   const openSearchModal = () => {
     setIsOpen(true);
-    setModalContent(<PFCSearchModal closeMethod={()=>setIsOpen(false)}/>);
+    setModalContent(<PFCSearchModal closeMethod={()=>setIsOpen(false)}
+      setCalorie={(val)=>setCalorie(val)}
+      setProtein={(val)=>setProtein(val)}
+      setFat={(val)=>setFat(val)}
+      setCarbohydrate={(val)=>setCarbohydrate(val)}
+      setNote={(val)=>setNote(val)}
+    />);
   }
 
   const openMessageModal = () => {
@@ -267,44 +272,91 @@ const PFCInput = () => {
   );
 }
 
-const PFCSearchModal = ({closeMethod}) => {
+const PFCSearchModal = ({closeMethod, setCalorie, setProtein, setFat, setCarbohydrate, setNote}) => {
+
+  const [foodList, setFoodList] = useState([]);
+  const [filter, setFilter] = useState([]);
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${baseUri}/getCalorieList`, {
+          credentials: 'include',
+          mode: 'cors',
+          method: 'POST'
+        });
+        
+        const json = await response.json();
+
+        setFoodList(json.result);
+        setFilter(json.result);
+  
+      } catch (error) {
+        console.error('Fetch error:', error);
+      }
+    };
+
+    fetchData();
+  },[]);
 
   const searchMeal = (e) => {
     let value = e.target.value;
+
+    let newFilter = [];
+
+    for (let i = 0; i < foodList.length; i++) {
+      if (foodList[i].note.includes(value)) {
+        newFilter.push(foodList[i]);
+      }
+    }
+
+    setFilter(newFilter);
+  }
+
+  const setPFC = (food) => {
+    setCalorie(food.calorie)
+    setProtein(food.protein)
+    setFat(food.fat)
+    setCarbohydrate(food.carbohydrate)
+    setNote(food.note)
+
+    closeMethod();
   }
 
   return (
     <Modal>
       <div className='edit-pfc-modal'>
         <div className='modal-row'>
-          <input className='modal-row__input' type='text'  onChange={searchMeal}/>
+          <input className='modal-row__input' type='text' onChange={searchMeal} placeholder='Search for...'/>
         </div>
-        <table className='food-history__table'>
-          <thead>
-            <tr>
-              <th className='col-note'></th>
-              <th className='col-calorie'>Calorie</th>
-              <th className='col-pfc'>P</th>
-              <th className='col-pfc'>F</th>
-              <th className='col-pfc'>C</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              {/* mealList.map((food, index) => (
-                <tr key={index}>
-                  <td className='col-note'>{food.note}</td>
-                  <td className='col-calorie'>{food.calorie}</td>
-                  <td className='col-pfc'>{food.protein}</td>
-                  <td className='col-pfc'>{food.fat}</td>
-                  <td className='col-pfc'>{food.carbohydrate}</td>
-                </tr>
-              )) */}
-            }
-          </tbody>
-        </table>
+        <div className='food-history'>
+          <table className='food-history__table'>
+            <thead>
+              <tr>
+                <th className='col-note'></th>
+                <th className='col-calorie'>Calorie</th>
+                <th className='col-pfc'>P</th>
+                <th className='col-pfc'>F</th>
+                <th className='col-pfc'>C</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                filter.map((food, index) => (
+                  <tr key={index} onClick={ () => setPFC(food) }>
+                    <td className='col-note'>{food.note}</td>
+                    <td className='col-calorie'>{food.calorie}</td>
+                    <td className='col-pfc'>{food.protein}</td>
+                    <td className='col-pfc'>{food.fat}</td>
+                    <td className='col-pfc'>{food.carbohydrate}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
         <div className='modal-row'>
-          {/* <button className='modal-row__button' onClick={ submitPFC }>変更</button> */}
           <button className='modal-row__button--cancel' onClick={ closeMethod }>キャンセル</button>
         </div>
       </div>

@@ -88,3 +88,10 @@ def get_userInfo():
   result = user.get_user_info(rd['username'])
 
   return { 'result' : result }
+
+@app.route('/getCalorieList', methods=['POST'])
+def get_calorie_list():
+  
+  result = pfc.select_all_data()
+
+  return { 'result' : result }

@@ -104,3 +104,41 @@ def select_todays_data():
       conn.close()                # DB切断
 
   return results
+
+def select_all_data():
+  query = f'''
+    SELECT DISTINCT
+      calorie,
+      protein,
+      fat,
+      carbohydrate,
+      note
+    FROM
+      CALORIE
+    ORDER BY
+      note;
+  '''
+
+  results = []
+
+  try:
+    conn = db.get_conn()            # DBに接続
+    cursor = conn.cursor()          # カーソルを取得
+    cursor.execute(query)           # SQL実行
+    weights = cursor.fetchall()     # selectの結果を全件タプルに格納
+
+    ### ２つのリストを辞書へ変換
+    for data_tuple in weights:
+      label_tuple = ('calorie', 'protein', 'fat', 'carbohydrate', 'note')
+      row_dict = {label: data for data, label in zip(data_tuple, label_tuple)} 
+      results.append(row_dict)
+
+  except mysql.connector.errors.ProgrammingError as e:
+    print('エラーが発生しました')
+    print(e)
+  finally:
+    if conn != None:
+      cursor.close()              # カーソルを終了
+      conn.close()                # DB切断
+
+  return results
