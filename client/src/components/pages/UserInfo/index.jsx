@@ -66,12 +66,14 @@ const UserInfo = () => {
     <>
       <Header/>
       <div className='pfc-input'>
+        <h2>このページは未完成です。</h2>
+        <h2>情報を更新できません。</h2>
         <div className='form__input'>
           <span>年齢：</span>
           <label>男</label>
-          <input type='radio' value={0} checked={gender===0}/>
+          <input type='radio' value={0} checked={gender===0} onClick={()=>setGender(0)}/>
           <label>女</label>
-          <input type='radio' value={1} checked={gender===1}/>
+          <input type='radio' value={1} checked={gender===1} onClick={()=>setGender(1)}/>
         </div>
         <div className='form__input'>
           <span>年齢：</span>
@@ -93,12 +95,12 @@ const UserInfo = () => {
         </div>
         <div className='form__input'>
           <span>身体活動レベル：</span><br></br>
-          <select>
-            <option value={0} selected={activityLevel===0}>ほぼ運動しない。通勤、デスクワーク程度</option>
-            <option value={1} selected={activityLevel===1}>軽い運動。週に1～2回程度の運動</option>
-            <option value={2} selected={activityLevel===2}>中程度の運動。週に3～5回程度の運動</option>
-            <option value={3} selected={activityLevel===3}>激しい運動。週に6～7回程度の運動</option>
-            <option value={4} selected={activityLevel===4}>非常に激しい運動。一日に2回程度の運動</option>
+          <select defaultValue={activityLevel}>
+            <option value={0} onClick={()=>setActivityLevel(0)}>ほぼ運動しない。通勤、デスクワーク程度</option>
+            <option value={1} onClick={()=>setActivityLevel(1)}>軽い運動。週に1～2回程度の運動</option>
+            <option value={2} onClick={()=>setActivityLevel(2)}>中程度の運動。週に3～5回程度の運動</option>
+            <option value={3} onClick={()=>setActivityLevel(3)}>激しい運動。週に6～7回程度の運動</option>
+            <option value={4} onClick={()=>setActivityLevel(4)}>非常に激しい運動。一日に2回程度の運動</option>
           </select>
         </div>
         <button className='form__button' onClick={ submitUserInfo }>更　新</button>
