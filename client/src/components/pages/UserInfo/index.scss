@@ -1,0 +1,74 @@
+@import '../../../common.scss';
+
+.user-info {
+  @include common-page;
+
+  .form__input {
+
+    input[type='number'] { 
+      width: 5.0rem;
+    }
+
+    input[type='radio'] { 
+      width: 2.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+
+.form__select {
+  @include common-input;
+}
+
+
+.calc-values {
+  width: 90%;
+  margin: 1.0rem 0;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.calc-value {
+  margin: 1.0rem 0;
+}
+
+.user-info-name {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+
+  h2 {
+    width: 100%;
+  }
+}
+
+.user-logout {
+  margin: auto;
+  height: 1.5rem;
+  width: 5.0rem;
+  position: absolute;
+  right:1.0rem;
+  border: 5px solid $secondary-blue;
+  border-radius: 2.0rem;
+  background-color: $secondary-blue;
+
+  &__link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: $background-color;
+  }
+
+  &__icon {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  &__span {
+    font-size: 0.5rem;
+  }
+}

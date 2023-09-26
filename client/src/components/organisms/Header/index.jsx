@@ -17,12 +17,6 @@ const Header = () => {
           <span>ユーザー</span>
         </Link>
       </div>
-      <div className='header__button'>
-        <Link to='/' className='header__link'>
-          <img className='header__icon' src={ logout } alt='logout'/>
-          <span>ログアウト</span>
-        </Link>
-      </div>
     </div>
   );
 }

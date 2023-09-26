@@ -106,3 +106,30 @@ def get_user_info(name):
 
   output_json = json.dumps(result_row, ensure_ascii=False)
   return output_json
+
+def update_user_info(name, gender, height, age, activityLevel):
+  query = f'''
+    UPDATE
+      USER
+    SET
+      gender = {gender},
+      height = {height},
+      age = {age},
+      activity_level = {activityLevel}
+    WHERE
+      name = '{name}';
+  '''
+
+  try:
+    conn = db.get_conn()            # DBに接続
+    cursor = conn.cursor()          # カーソルを取得
+    cursor.execute(query)           # SQL実行
+    conn.commit()                   # コミット
+
+  except mysql.connector.errors.ProgrammingError as e:
+    print('エラーが発生しました')
+    print(e)
+  finally:
+    if conn != None:
+      cursor.close()              # カーソルを終了
+      conn.close()                # DB切断

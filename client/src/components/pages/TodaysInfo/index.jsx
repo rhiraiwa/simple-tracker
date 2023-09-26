@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { baseUri, pageNo } from '../../../const';
+import { ACTIVITY_LEVEL_MAP, ADDITIONAL_CORRECT_MAP, AGE_CORRECT_MAP, HEIGHT_CORRECT_MAP, WEIGHT_CORRECT_MAP, baseUri, pageNo } from '../../../const';
 import Header from '../../organisms/Header';
 import Footer from '../../organisms/Footer';
 import CaloriePieChart from '../../templates/CaloriePieChart';
@@ -9,6 +9,8 @@ import './index.scss';
 
 const TodaysInfo = () => {
 
+  const username = sessionStorage.getItem('username');
+
   const [yearMonthDate, setYearMonthDate] = useState('');
 
   const [todaysCalorie, setTodaysCalorie] = useState(0);
@@ -17,6 +19,7 @@ const TodaysInfo = () => {
   const [todaysCarbohydrate, setTodaysCarbohydrate] = useState(0);
   const [foodList, setFoodList] = useState([]);
 
+  const [bmr, setBmr] = useState(0);
   const [limit, setLimit] = useState(0);
 
   useEffect(() => {
@@ -27,13 +30,6 @@ const TodaysInfo = () => {
       const dd = ('0'+(today.getDate())).slice(-2);
   
       setYearMonthDate(`${yyyy}/${mm}/${dd}`);
-    }
-
-    const calcLimit = async (weight) => {
-      // 性別・年齢・身長・身体活動レベルが固定
-      //（9.247×体重kg＋3.098×身長cm−4.33×年齢+447.593）基礎代謝 * 軽い運動
-      let wLimit =Math.round(((9.247*weight) + (3.098*161.5) - (4.33*30) +447.593) * 1.2 )
-      setLimit(wLimit);
     }
 
     const fetchData = async () => {
@@ -58,8 +54,6 @@ const TodaysInfo = () => {
           c += Number(json.result[i].carbohydrate);
         }
 
-        calcLimit(json.weight);
-
         setTodaysCalorie(cal);
         setTodaysProtein(p);
         setTodaysFat(f);
@@ -75,6 +69,45 @@ const TodaysInfo = () => {
     fetchData();
   },[]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${baseUri}/getUserInfo`, {
+          credentials: 'include',
+          mode: 'cors',
+          method: 'POST',
+          headers: {
+              "Content-Type": "application/json; charset=utf-8",
+          },
+          body: JSON.stringify({
+            username: username
+          })
+        });
+  
+        const json = await response.json();
+
+        if (json.result === null) return;
+
+        let gender = JSON.parse(json.result)[0].gender;
+        let age = JSON.parse(json.result)[0].age;
+        let height = JSON.parse(json.result)[0].height;
+        let activityLevel = JSON.parse(json.result)[0].activity_level;
+        let weight = json.weight;
+
+        let wBmr = WEIGHT_CORRECT_MAP[gender] * weight + HEIGHT_CORRECT_MAP[gender] * height - AGE_CORRECT_MAP[gender] * age + ADDITIONAL_CORRECT_MAP[gender];
+        let wTdee = wBmr * ACTIVITY_LEVEL_MAP[activityLevel];
+  
+        setBmr(Math.round(wBmr));
+        setLimit(Math.round(wTdee));
+
+      } catch (error) {
+        console.error('Fetch error:', error);
+      }
+    }
+
+    fetchData();
+  },[])
+
   return (
     <React.Fragment>
       <Header/>
@@ -86,7 +119,7 @@ const TodaysInfo = () => {
          <label>カロリー・PFC</label>
         </div>
         <div className='calorie-responsive-container'>
-          <CaloriePieChart calorie={todaysCalorie} limit={limit}/>
+          <CaloriePieChart calorie={todaysCalorie} limit={limit} bmr={bmr}/>
         </div>
         <div className='pfc-responsive-container'>
           <PFCBarChart p={todaysProtein} f={todaysFat} c={todaysCarbohydrate}/>

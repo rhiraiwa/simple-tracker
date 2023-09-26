@@ -1,8 +1,9 @@
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 import './index.scss';
 
-const CaloriePieChart = ({ calorie, limit }) => {
-  const DIET_CALORIE = limit - 300;
+const CaloriePieChart = ({ calorie, limit, bmr }) => {
+  // const DIET_CALORIE = limit - 300;
+  const DIET_CALORIE = bmr;
   const RADIAN = Math.PI / 180;
 
   const screenWidth = window.screen.width;
@@ -52,11 +53,15 @@ const CaloriePieChart = ({ calorie, limit }) => {
             <text className='calorie-value' x={x0} y={yc} textAnchor="middle" fill="#f1d6df">{`${value.toLocaleString()} kcal`}</text>
             <text x={xmin - 5} y={y0} textAnchor="end" fill={mainColor}>0</text>
             <text x={xmin} y={y0 - 2} textAnchor="start" fill={mainColor}>_</text>
+            <text className='calorie-label' x={xmax + 5} y={y0-16} textAnchor="start" fill={mainColor}>活動代謝</text>
             <text x={xmax + 5} y={y0} textAnchor="start" fill={mainColor}>{limit.toLocaleString()}</text>
             <text x={xmax} y={y0 - 2} textAnchor="end" fill={mainColor}>_</text>
           </>
         ) : (
+          <>
+          <text className='calorie-label' x={xp + 5} y={yp-16} textAnchor="start" fill={auxiliaryColor}>基礎代謝</text>
           <text x={xp + 5} y={yp} textAnchor="start" fill={auxiliaryColor}>{DIET_CALORIE.toLocaleString()}</text>
+          </>
         )}
       </>
     );

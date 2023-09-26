@@ -86,8 +86,9 @@ def get_userInfo():
   
   rd = json.loads(request.data)
   result = user.get_user_info(rd['username'])
+  w = weight.todays()
 
-  return { 'result' : result }
+  return { 'result' : result, 'weight' : w }
 
 @app.route('/getCalorieList', methods=['POST'])
 def get_calorie_list():
@@ -95,3 +96,12 @@ def get_calorie_list():
   result = pfc.select_all_data()
 
   return { 'result' : result }
+
+@app.route('/userInfoUpdate', methods=['POST'])
+def user_info_update():
+
+  rd = json.loads(request.data)
+  user.update_user_info(rd['username'], rd['gender'], rd['height'], rd['age'], rd['activityLevel'])
+
+  return { 'result' : 'OK'}
+  

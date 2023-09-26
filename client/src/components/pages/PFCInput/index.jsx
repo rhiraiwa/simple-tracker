@@ -25,10 +25,6 @@ const PFCInput = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
-  const callBackMethod = () => {
-    setModalContent(<MessageBox message={'更新しました'} closeMethod={()=>window.location.reload()}/>);
-  }
-
   const openSearchModal = () => {
     setIsOpen(true);
     setModalContent(<PFCSearchModal closeMethod={()=>setIsOpen(false)}
