@@ -37,6 +37,11 @@
         @include common-button;
         margin: 0.5rem;
         background-color: $danger-color;
+
+        &:hover {
+          background-color: lighten($danger-color, 10%);
+          cursor: pointer;
+        }
       }
 
       &--cancel {

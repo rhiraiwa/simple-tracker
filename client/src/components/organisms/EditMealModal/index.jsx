@@ -55,6 +55,9 @@ const EditMaelModal = ({values, closeMethod, callBackMethod}) => {
   }
 
   const deletePFC = async () => {
+
+    if (!window.confirm(`${note} を削除しますか？`)) return;
+
     try {
       await fetch(`${baseUri}/pfcDelete`, {
         credentials:'include',
