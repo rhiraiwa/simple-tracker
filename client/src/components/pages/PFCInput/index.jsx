@@ -89,7 +89,7 @@ const PFCInput = () => {
     const value = e.target.value.replace('.', '');
     
     if (value > 60) return;
-    setHour(value);
+    setMinute(value);
   }
 
   const handleCalorie = (e) => {
