@@ -14,12 +14,12 @@
       height: 1.5rem;
     }
   }
-}
 
-.form__select {
-  @include common-input;
-}
+  .form__select {
+    @include common-input;
+  }
 
+}
 
 .calc-values {
   width: 90%;

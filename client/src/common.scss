@@ -21,6 +21,7 @@ body {
   align-items: center;
   justify-content: center;
   height: calc(100vh - 8.0rem);
+  overflow: scroll;
   margin: 4.0rem 0;
   background-color: $background-color;
 }
