@@ -31,7 +31,13 @@
 
     &__button {
       @include common-button;
-      margin: 1.0rem;
+      margin: 0.5rem;
+
+      &--danger {
+        @include common-button;
+        margin: 0.5rem;
+        background-color: $danger-color;
+      }
 
       &--cancel {
         @include common-button;

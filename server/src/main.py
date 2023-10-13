@@ -81,6 +81,14 @@ def pfc_update():
 
   return { 'result' : result }
 
+@app.route('/pfcDelete', methods=['POST'])
+def pfc_delete():
+  rd = json.loads(request.data)
+  print(rd['id'])
+  result = pfc.delete(rd['id'])
+
+  return { 'result' : result }
+
 @app.route('/getUserInfo', methods=['POST'])
 def get_userInfo():
   

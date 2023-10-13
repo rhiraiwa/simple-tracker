@@ -5,11 +5,11 @@ import './index.scss';
 
 const EditMaelModal = ({values, closeMethod, callBackMethod}) => {
   const id = values.id;
-  const [calorie, setCalorie] = useState(values.calorie);
-  const [protein, setProtein] = useState(values.protein);
-  const [fat, setFat] = useState(values.fat);
-  const [carbohydrate, setCarbohydrate] = useState(values.carbohydrate);
-  const [note, setNote] = useState(values.note);
+  const [calorie, setCalorie] = useState(values.calorie? values.calorie : '');
+  const [protein, setProtein] = useState(values.protein? values.protein : '');
+  const [fat, setFat] = useState(values.fat? values.fat : '');
+  const [carbohydrate, setCarbohydrate] = useState(values.carbohydrate? values.carbohydrate : '');
+  const [note, setNote] = useState(values.note? values.note : '');
 
   const handleCalorie = (e) => {
     const value = e.target.value;
@@ -54,6 +54,25 @@ const EditMaelModal = ({values, closeMethod, callBackMethod}) => {
     setNote(value);
   }
 
+  const deletePFC = async () => {
+    try {
+      await fetch(`${baseUri}/pfcDelete`, {
+        credentials:'include',
+        mode: "cors",
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+        },
+        body: JSON.stringify({ id: id })
+      });
+
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
+
+    callBackMethod('削除しました');
+  }
+
   const submitPFC = async () => {
     try {
       await fetch(`${baseUri}/pfcUpdate`, {
@@ -77,7 +96,7 @@ const EditMaelModal = ({values, closeMethod, callBackMethod}) => {
       console.error('Fetch error:', error);
     }
 
-    callBackMethod();
+    callBackMethod('更新しました');
   }
 
   return (
@@ -103,6 +122,7 @@ const EditMaelModal = ({values, closeMethod, callBackMethod}) => {
           <input className='modal-row__input--number' type='number' value={carbohydrate} onChange={handleCarbohydrate}/>
         </div>
         <div className='modal-row'>
+          <button className='modal-row__button--danger' onClick={ deletePFC }>削除</button>
           <button className='modal-row__button' onClick={ submitPFC }>変更</button>
           <button className='modal-row__button--cancel' onClick={ closeMethod }>キャンセル</button>
         </div>

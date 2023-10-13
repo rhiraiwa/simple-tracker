@@ -64,6 +64,13 @@ def update(id, calorie, protein, fat, carbohydrate, note):
 
   execute_query(query)
 
+def delete(id):
+  query = f'''
+    DELETE FROM CALORIE where id = {id};
+  '''
+
+  execute_query(query)
+
 def select_todays_data():
   query = f'''
     SELECT

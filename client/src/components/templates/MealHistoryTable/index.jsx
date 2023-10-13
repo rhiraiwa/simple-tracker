@@ -8,8 +8,8 @@ const MealHistoryTable = ({mealList}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
-  const callBackMethod = () => {
-    setModalContent(<MessageBox message={'更新しました'} closeMethod={()=>window.location.reload()}/>);
+  const callBackMethod = (message) => {
+    setModalContent(<MessageBox message={message} closeMethod={()=>window.location.reload()}/>);
   }
 
   const openEditModal = (food) => {
