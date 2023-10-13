@@ -25,6 +25,31 @@ const TodaysInfo = () => {
   const [bmr, setBmr] = useState(0);
   const [limit, setLimit] = useState(0);
 
+  const [startX, setStartX] = useState(null);
+
+  const handleTouchStart = (e) => {
+    let value = e.touches[0].clientX;
+    setStartX(value);
+  }
+
+  const handleTouchEnd = (e) => {
+    if (startX && e.changedTouches && e.changedTouches[0]) {
+      const endX = e.changedTouches[0].clientX;
+      const deltaX = endX - startX;
+
+      if (deltaX > 50) {
+        getDateWithOffset(-1)
+        console.log('右にスワイプされました');
+      } else if (deltaX < -50) {
+        getDateWithOffset(1)
+        console.log('左にスワイプされました');
+      }
+    }
+
+    // スワイプ検知に使用した状態をリセット
+    setStartX(null);
+  };
+
   useEffect(() => {
     getDateWithOffset(0);
     fetchUserInfo();
@@ -123,7 +148,9 @@ const TodaysInfo = () => {
   return (
     <React.Fragment>
       <Header/>
-      <div className='todays-info'>
+      <div className='todays-info'
+           onTouchStart={handleTouchStart}
+           onTouchEnd={handleTouchEnd}>
         <div className='container-title-date'>
           <span onClick={() => getDateWithOffset(-1)}>◀</span>
           <label>{yearMonthDate.slash}</label>
