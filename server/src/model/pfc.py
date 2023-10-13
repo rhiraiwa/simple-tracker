@@ -71,7 +71,7 @@ def delete(id):
 
   execute_query(query)
 
-def select_todays_data():
+def select_todays_data(year_month_date):
   query = f'''
     SELECT
       id,
@@ -83,7 +83,7 @@ def select_todays_data():
     FROM
       CALORIE
     WHERE
-      DATE_FORMAT(date, '%Y-%m-%d') = DATE_FORMAT(NOW(), '%Y-%m-%d')
+      DATE_FORMAT(date, '%Y-%m-%d') = '{year_month_date}'
     ORDER BY
       id;
   '''

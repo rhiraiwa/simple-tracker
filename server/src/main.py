@@ -68,7 +68,8 @@ def pfc_input():
 @app.route('/todaysInfo', methods=['POST'])
 def todays_info():
   
-  result = pfc.select_todays_data()
+  rd = json.loads(request.data)
+  result = pfc.select_todays_data(rd['yearmonthdate'])
   w = weight.todays()
 
   return { 'result' : result, 'weight' : w }
